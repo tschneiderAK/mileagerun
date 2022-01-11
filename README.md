@@ -1,2 +1,2 @@
 # flight-finder
-Searches ITA Matrix for flights given a set of criteria.
+Uses Amadeus to find flights based on user options.
