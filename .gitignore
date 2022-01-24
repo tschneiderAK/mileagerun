@@ -127,3 +127,12 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#API keys and user configs
+/config
+
+#Data pulled from API
+/Data
+
+#debugging files
+/src/.vscode/
