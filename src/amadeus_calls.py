@@ -1,7 +1,6 @@
 """Uses the Amadeus APIs to extract data from JSON objects."""
 
 
-from http import client
 import json
 from csv import DictReader
 from pathlib import Path
@@ -17,11 +16,29 @@ def main():
     
     """
     amadeus = initialize_client()
-    response = flight_destinations(amadeus, 'PAR')
-    results = relpath("../data/result.json")
-    with open(results, 'w') as f:
-        json.dump(response.data, f)
+    pricing_test(amadeus)       
+    # response = flight_destinations(amadeus, 'PAR')
+    # results = relpath("../data/result.json")
+    # with open(results, 'w') as f:
+    #     json.dump(response.data, f)
 
+
+def pricing_test(amadeus):
+    try:
+        '''
+        Confirm availability and price from SYD to BKK in summer 2022
+        '''
+        flights = amadeus.shopping.flight_offers_search.get(originLocationCode='SYD', destinationLocationCode='BKK',
+                                                            departureDate='2022-07-01', adults=1).data
+        response_one_flight = amadeus.shopping.flight_offers.pricing.post(
+            flights[0])
+        print(response_one_flight.data)
+
+        response_two_flights = amadeus.shopping.flight_offers.pricing.post(
+            flights[0:2])
+        print(response_two_flights.data)
+    except ResponseError as error:
+        raise error
 
 def initialize_client():
     api_dict = retrieve_api_keys()
