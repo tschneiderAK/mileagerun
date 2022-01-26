@@ -1,0 +1,4 @@
+amadeus==5.2.0
+haversine==2.5.1
+mysql-connector-python==8.0.28
+protobuf==3.19.3

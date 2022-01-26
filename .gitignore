@@ -134,5 +134,5 @@ dmypy.json
 #Data pulled from API
 /Data
 
-#debugging files
+#preference files
 /src/.vscode/
