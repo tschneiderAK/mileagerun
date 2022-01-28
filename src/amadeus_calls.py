@@ -1,10 +1,8 @@
 """Uses the Amadeus APIs to extract data from JSON objects."""
 
 
-import json
+import os.path
 from csv import DictReader
-from pathlib import Path
-from posixpath import relpath
 from amadeus import Client, ResponseError
 
 
@@ -16,7 +14,7 @@ def main():
     
     """
     amadeus = initialize_client()
-    pricing_test(amadeus)       
+    # pricing_test(amadeus)       
     # response = flight_destinations(amadeus, 'PAR')
     # results = relpath("../data/result.json")
     # with open(results, 'w') as f:
@@ -54,7 +52,7 @@ def retrieve_api_keys():
     
     """
 
-    api_keys = relpath("../config/api-keys.csv")
+    api_keys = os.path.join(os.path.dirname(__file__), "../config/api-keys.csv")
     with open(api_keys, 'r') as f:
         reader= DictReader(f)
         for row in reader:
