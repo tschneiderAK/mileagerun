@@ -14,7 +14,8 @@ def main(origin, destination):
 
     origin_coords = get_coordinates(origin, cursor)
     dest_coords = get_coordinates(destination, cursor)
-    calculate_distance(origin_coords, dest_coords)
+    distance = calculate_distance(origin_coords, dest_coords)
+    print(distance)
 
 def get_coordinates(airport: str, cursor):
     """Returns a tuple of coordinatees for an airport given the 3 letter IATA code."""
@@ -23,8 +24,8 @@ def get_coordinates(airport: str, cursor):
         raise ValueError('Airport must be 3 letter uppercase IATA code.') 
 
     coords = []
-    query_coords = 'SELECT lat_decimal, lon_decimal FROM flightdata WHERE iata_code=%s'
-    cursor.execute(query_coords, airport)
+    query_coords = "SELECT lat_decimal, lon_decimal FROM airports WHERE iata_code=%s"
+    cursor.execute(query_coords, (airport,))
     for (lat_demical, lon_decmial) in cursor:
         coords.append((lat_demical, lon_decmial))
     
@@ -32,6 +33,8 @@ def get_coordinates(airport: str, cursor):
         raise LookupError('Airport code not found in database.')
     if len(coords) > 1:
         raise LookupError('Multiple coordinate sets found for airport entry.')
+
+    return coords[0]
 
 
 def calculate_distance(origin: tuple, destination: tuple):
@@ -44,4 +47,4 @@ def calculate_distance(origin: tuple, destination: tuple):
 
 
 if __name__ == '__main__':
-    main(sys.argv[1], sys.argv[2])
+    main('CDG', 'LAX')
