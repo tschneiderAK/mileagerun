@@ -47,4 +47,4 @@ def calculate_distance(origin: tuple, destination: tuple):
 
 
 if __name__ == '__main__':
-    main('CDG', 'LAX')
+    main(sys.argv[1], sys.argv[2])

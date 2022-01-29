@@ -1,0 +1,22 @@
+credit_airline,flown_airline,flight_type,class_name,fare_code,base_rdm,class_rdm,total_rdm,eqm,eqd,elite_bonus_rdm
+DL,AM,,Business,J, 1.00 , 1.00 , 2.00 , 2.00 , 0.40 ,Y
+DL,AM,,Business,"C, D, I", 1.00 , 1.00 , 2.00 , 1.50 , 0.40 ,Y
+DL,AM,,Full Economy,"W, Y", 1.00 , 0.25 , 1.25 , 1.50 , 0.25 ,Y
+DL,AM,,Economy,"B, M, K, H, Q, L, T, U", 1.00 ,, 1.00 , 1.00 , 0.20 ,Y
+DL,AM,,Discounted Economy,"E, N, R", 0.50 ,, 0.50 , 1.00 , 0.10 ,Y
+DL,AM,,Deep Discount Economy,V, 0.25 ,, 0.25 , 1.00 , 0.05 ,Y
+DL,AF,EX-EUROPRE INTL,First,"P,F", 1.00 , 2.00 , 3.00 , 2.00 , 0.60 ,Y
+DL,AF,EX-EUROPRE INTL,Business,J, 1.00 , 1.00 , 2.00 , 2.00 , 0.40 ,Y
+DL,AF,EX-EUROPRE INTL,Business,"C,D,I,Z", 1.00 , 1.00 , 2.00 , 1.50 , 0.40 ,Y
+DL,AF,EX-EUROPRE INTL,Business,O, 1.00 ,, 1.00 , 1.00 , 0.20 ,Y
+DL,AF,EX-EUROPRE INTL,PREMIUM ECONOMY,"W,S,A", 1.00 , 0.50 , 1.50 , 1.50 , 0.30 ,Y
+DL,AF,EX-EUROPRE INTL,Full Economy,"Y,B,M", 1.00 , 0.25 , 1.25 , 1.50 , 0.25 ,Y
+DL,AF,EX-EUROPRE INTL,Economy,"U,K", 1.00 ,, 1.00 , 1.00 , 0.20 ,Y
+DL,AF,EX-EUROPRE INTL,Discounted Economy,"H,L,Q,T,E,N", 0.50 ,, 0.50 , 1.00 , 0.10 ,Y
+DL,AF,EX-EUROPRE INTL,Deep Discount Economy,"R,G,V,X", 0.25 ,, 0.25 , 1.00 , 0.05 ,Y
+DL,AF,INTRA-EUROPE,Business,J, 1.00 , 1.00 , 2.00 , 2.00 , 0.40 ,Y
+DL,AF,INTRA-EUROPE,Business,"C, D, I, Z", 1.00 , 1.00 , 2.00 , 1.50 , 0.40 ,Y
+DL,AF,INTRA-EUROPE,Full Economy,"Y, B, M", 1.00 , 0.25 , 1.25 , 1.50 , 0.25 ,Y
+DL,AF,INTRA-EUROPE,Economy,"W, P, F, U, K", 1.00 ,, 1.00 , 1.00 , 0.20 ,Y
+DL,AF,INTRA-EUROPE,Discounted Economy,"S, A, H, L, Q, T, E, N", 0.50 ,, 0.50 , 1.00 , 0.10 ,Y
+DL,AF,INTRA-EUROPE,Deep Discount Economy,"R, G, V", 0.25 ,, 0.25 , 1.00 , 0.05 ,Y
