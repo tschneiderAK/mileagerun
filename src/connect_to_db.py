@@ -11,9 +11,11 @@ def connect_to_db():
     config_data = read_config()
     return connect(**config_data)
 
-def read_config():
-    db_config_file = os.path.join(os.path.dirname(__file__), "../config/db_config.csv")
-    with open(db_config_file, 'r') as f:
+
+def read_config(file_name):
+# This should be refactored using another file reading method. DictReader not ideal as we should not need an iterator.
+    db_config_path = os.path.join(os.path.dirname(__file__), f"../config/{file_name}")
+    with open(db_config_path, 'r') as f:
         reader = DictReader(f)
         for row in reader:
             return row
