@@ -15,11 +15,22 @@ def main(origin, destination):
     origin_coords = get_coordinates(airport=origin, cursor=cursor)
     dest_coords = get_coordinates(airport=destination, cursor=cursor)
     distance = calculate_distance(origin_coords, dest_coords)
-    print(distance)
+    print(f"Origin: {origin}")
+    print(f"Destination: {destination}")
+    print(f"Miles flown: {str(round(distance))}")
+
 
 def get_coordinates(airport: str, cursor):
-    """Returns a tuple of lat/long coordinatees for an airport given the 3 letter IATA code."""
+    """Returns a tuple of lat/long coordinatees for an airport given the 3 letter IATA code.
     
+    Parameters:
+        airport (str):  3-letter IATA code, case insensitive.
+        cursor:         MySQL database connection cursor.
+
+    Returns:
+        coords (tuple): Latitude/Longitude for the airport in decimal format, negative values denote West/South coordinates.
+    """
+    airport = airport.upper()
     if not match('[A-Z]{3}', airport):
         raise ValueError('Airport must be 3 letter uppercase IATA code.') 
 
@@ -47,4 +58,6 @@ def calculate_distance(origin: tuple, destination: tuple):
 
 
 if __name__ == '__main__':
-    main(sys.argv[1], sys.argv[2])
+    origin = sys.argv[1] if len(sys.argv) > 1 else 'LAX'
+    destination = sys.argv[2] if len(sys.argv) > 2 else 'JFK'
+    main(origin, destination)
