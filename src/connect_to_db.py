@@ -1,25 +1,28 @@
 """Connects to the MySQL database using the info from db_config"""
 from csv import DictReader
-import os.path
+from sys import argv
 from mysql.connector import connect
+import os.path
 
 
-def main():
-    connect_to_db
+def main(config_file):
+    connect_to_db(config_file)
 
-def connect_to_db():
-    config_data = read_config()
+def connect_to_db(config_file):
+    config_data = read_config(config_file)
     return connect(**config_data)
 
 
-def read_config(file_name):
+def read_config(config_file):
 # This should be refactored using another file reading method. DictReader not ideal as we should not need an iterator.
-    db_config_path = os.path.join(os.path.dirname(__file__), f"../config/{file_name}")
-    with open(db_config_path, 'r') as f:
+    db_config_path = f'flight-finder/config/{config_file}'
+    module_path = os.path.dirname(__file__)
+    path = os.path.relpath(db_config_path, module_path)
+    with open(path, 'r') as f:
         reader = DictReader(f)
         for row in reader:
             return row
 
 
 if __name__ == '__main__':
-    main()
+    main(argv[1])

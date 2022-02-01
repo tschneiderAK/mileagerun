@@ -9,16 +9,16 @@ from re import match
 
 
 def main(origin, destination):
-    cnx = connect_to_db()
+    cnx = connect_to_db('db_config.csv')
     cursor = cnx.cursor()
 
-    origin_coords = get_coordinates(origin, cursor)
-    dest_coords = get_coordinates(destination, cursor)
+    origin_coords = get_coordinates(airport=origin, cursor=cursor)
+    dest_coords = get_coordinates(airport=destination, cursor=cursor)
     distance = calculate_distance(origin_coords, dest_coords)
     print(distance)
 
 def get_coordinates(airport: str, cursor):
-    """Returns a tuple of coordinatees for an airport given the 3 letter IATA code."""
+    """Returns a tuple of lat/long coordinatees for an airport given the 3 letter IATA code."""
     
     if not match('[A-Z]{3}', airport):
         raise ValueError('Airport must be 3 letter uppercase IATA code.') 
