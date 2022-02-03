@@ -1,14 +1,34 @@
-"""Finds flights from a specified origin and list of destinations over a date range.
+"""Defines classes Segment and Itinerary."""
 
-Parameters:
-    orgin (str):            3 letter IATA airport code for origin.
-    destinations (.txt):    .txt file containing a destination airport code on each line.
-    start (str):            Date for start of search range, formatted yyyy-mm-dd.
-    end (str):              Date for end of search range, formatter yyyy-mm-dd.
-    
-Returns:
-    itineraries (list):     List of itinerary objects."""
+import dataclasses
 
+
+@dataclasses.dataclass
+class Segment:
+    origin:         str
+    destination:    str
+    date:           str
+    flight_number:  str
+    fare_code:      str
+
+
+class Itinerary:
+    def __init__(
+            self, 
+            price: float,
+            currency: str,
+            origin: str,
+            destination: str,
+            date: str,
+            segments: list
+            ) -> None:
+
+        self.price = price
+        self.currency = currency
+        self.origin = origin
+        self.destination = destination
+        self.date = date
+        self.segments = segments
 
 def main():
     return
