@@ -16,7 +16,7 @@ def load_data(file_path, table, cursor):
             values = ", ".join([row.values()])
             sql = "INSERT INTO {table} ({columns}) VALUES ({values});".format(columns=", ".join(row.keys()), values=values)
             cursor.execute(sql)
-            
+
 
 if __name__ == '__main__':
     main()

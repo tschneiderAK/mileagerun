@@ -17,19 +17,23 @@ def rdm_from_distance(miles: float, credit_airline: str, flown_airline: str,flig
             WHERE credit_airline=%s
             AND flown_airline=%s
             AND flight_type=%s
-            AND fare_code=%s
-            LIMIT 1;"""
+            AND fare_code=%s;"""
+
     cursor.execute(sql, (credit_airline, flown_airline, flight_type, fare_code))
-    multipliers = dict(zip(cursor.column_names(), cursor.fetchone()))
+    multipliers = dict(zip(cursor.column_names, cursor.fetchone()))
+    
+    # Calculate redeemable miles (rdm), elite qualifying miles (eqm), and elite qualifying dollars (eqd) based on miles flown and earnings multipliers.
+
     rdm = miles * multipliers['total_rdm_mult']
     eqm = miles * multipliers['eqm_mult']
     eqd = miles * multipliers['eqd_mult']
     earnings = {'rdm': rdm,
                 'eqm': eqm,
                 'eqd': eqd}
+    print(earnings)
     return earnings
     
 
 if __name__ == '__main__':
-    rdm_from_distance(100, 'DL', 'AF', 'EX-EUROPE', 'J')
+    rdm_from_distance(16500, 'DL', 'AF', 'EX-EUROPE', 'Z')
 

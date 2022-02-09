@@ -1,4 +1,14 @@
 amadeus==5.2.0
+appdirs==1.4.4
+certifi==2021.10.8
+colorama==0.4.4
 haversine==2.5.1
+importlib-metadata==4.10.1
 mysql-connector-python==8.0.28
 protobuf==3.19.3
+pyee==8.2.2
+pyppeteer==1.0.2
+tqdm==4.62.3
+urllib3==1.26.8
+websockets==10.1
+zipp==3.7.0

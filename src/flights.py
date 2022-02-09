@@ -1,5 +1,6 @@
 """Defines classes Segment and Itinerary."""
 
+
 import dataclasses
 
 
