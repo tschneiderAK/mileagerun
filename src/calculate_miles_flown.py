@@ -18,6 +18,7 @@ def main(origin, destination):
     print(f"Origin: {origin}")
     print(f"Destination: {destination}")
     print(f"Miles flown: {str(round(distance))}")
+    cnx.close()
 
 
 def get_coordinates(airport: str, cursor):
