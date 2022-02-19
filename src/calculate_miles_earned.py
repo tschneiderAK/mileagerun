@@ -1,5 +1,6 @@
 from connect_to_db import connect_to_db   
 from calculate_miles_flown import main as distance
+import dataclasses
 
 
 @dataclasses.dataclass
