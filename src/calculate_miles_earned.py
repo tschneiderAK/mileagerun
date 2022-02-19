@@ -1,4 +1,57 @@
 from connect_to_db import connect_to_db   
+from calculate_miles_flown import main as distance
+
+
+@dataclasses.dataclass
+class Segment:
+    origin: str
+    destination: str
+    date: str
+    flight_number: str
+    fare_code: str
+    airline: str
+    price: str
+    flight_type: str
+
+
+class Itinerary:
+    def __init__(
+            self, 
+            price: float,
+            currency: str,
+            origin: str,
+            destination: str,
+            date: str,
+            segments: list,
+            ) -> None:
+
+        self.price = price
+        self.currency = currency
+        self.origin = origin
+        self.destination = destination
+        self.date = date
+        self.segments = segments
+    
+    def calculate_earnings(self, credit_airline):
+        total_rdm = 0
+        for segment in self.segments:
+            total_rdm += rdm_from_distance(
+                miles= distance(segment.origin, segment.destination),
+                flown_airline= segment.airline,
+                credit_airline= credit_airline,
+                flight_type= segment.flight_type,
+                fare_code= segment.fare_code
+            )
+
+
+class ReturnItinerary(Itinerary):
+    def __init__(self,
+                return_date = str,
+                return_segments = list):
+        super().__init__()
+        self.return_date = return_date
+        self.return_segments = return_segments
+
 
 
 def rdm_from_distance(miles: float, credit_airline: str, flown_airline: str,flight_type: str, fare_code: str):
@@ -30,9 +83,9 @@ def rdm_from_distance(miles: float, credit_airline: str, flown_airline: str,flig
     earnings = {'rdm': rdm,
                 'eqm': eqm,
                 'eqd': eqd}
-    print(earnings)
+    # print(earnings)
     return earnings
-    
+
 
 if __name__ == '__main__':
     rdm_from_distance(16500, 'DL', 'AF', 'EX-EUROPE', 'Z')
