@@ -1,12 +1,19 @@
 amadeus==5.2.0
 anyio==3.5.0
 appdirs==1.4.4
+asgiref==3.5.0
 certifi==2021.10.8
+click==8.0.4
 colorama==0.4.4
 fastapi==0.74.0
+Flask==2.0.3
+h11==0.13.0
 haversine==2.5.1
 idna==3.3
 importlib-metadata==4.10.1
+itsdangerous==2.1.0
+Jinja2==3.0.3
+MarkupSafe==2.1.0
 mysql-connector-python==8.0.28
 protobuf==3.19.3
 pydantic==1.9.0
@@ -16,5 +23,7 @@ starlette==0.17.1
 tqdm==4.62.3
 typing_extensions==4.1.1
 urllib3==1.26.8
+uvicorn==0.17.5
 websockets==10.1
+Werkzeug==2.0.3
 zipp==3.7.0
