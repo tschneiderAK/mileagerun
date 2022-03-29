@@ -8,5 +8,9 @@
     {% endfor %}
 {% endif %}    
 {% endwith %}
+<form action="#" method="POST">
+    <input type="email" name="email" placeholder="Enter Email" value="{{email if email}}"/>
+    <input type="submit" value="Submit"/>
+</form>
 <h1>Welcome, {{user}}.</h1>
 {% endblock%}
