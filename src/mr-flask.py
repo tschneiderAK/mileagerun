@@ -1,11 +1,10 @@
-from time import time
-from flask import Flask, redirect, render_template, request, url_for, session
+from flask import Flask, redirect, render_template, request, url_for, session, flash
 
 from datetime import timedelta
 
 app = Flask(__name__)
 app.secret_key = 'hello'
-app.permanent_session_lifetime = timedelta(minutes=10)
+app.permanent_session_lifetime = timedelta(minutes=5)
 
 @app.route('/')
 def home():
@@ -17,9 +16,12 @@ def login():
         session.permanent = True
         user = request.form['nm']
         session['user'] = user
+        flash(f"Successfully logged in as {user}.")
         return redirect(url_for('userhome'))
     else:
         if 'user' in session:
+            user = session['user']
+            flash(f"Logged in as {user}.")
             return redirect(url_for('userhome'))
         return render_template('login.html')
 
@@ -27,13 +29,15 @@ def login():
 def userhome():
     if 'user' in session:
         user = session['user']
-        return render_template('userhome.html')
+        return render_template('userhome.html', user=user)
     else:
         return redirect(url_for('login'))
 
-@app.route('/logout')
+@app.route('/logout/')
 def logout():
-    return "logout"
+    if 'user' in session:
+        user = session['user']
+        flash(f"You have been logged out, {user}.", "info")
     session.pop('user', None)
     return redirect(url_for('login'))
 
