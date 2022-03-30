@@ -1,24 +1,7 @@
-import email, sqlalchemy
-from flask import Flask, redirect, render_template, request, url_for, session, flash
-from flask_sqlalchemy import SQLAlchemy
-from datetime import timedelta
 
-app = Flask(__name__)
-app.secret_key = 'hello'
-app.config['SQLALCHEMY_DATABASE_URI'] ='sqlite:///users.sqlite3'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.permanent_session_lifetime = timedelta(minutes=5)
-
-db =SQLAlchemy(app)
-
-class users(db.Model):
-    _id = db.Column('id', db.Integer, primary_key=True)
-    name = db.Column(db.String(100))
-    email = db.Column(db.String(100))
-
-    def __init__(self, name, email) -> None:
-        self.name = name
-        self.email = email
+from flask import redirect, render_template, request, url_for, session, flash
+from mileagerun.models import User, earning
+from mileagerun import app, db
 
 @app.route('/')
 def home():
@@ -26,7 +9,7 @@ def home():
 
 @app.route('/view')
 def view():
-    return render_template('view.html', values=users.query.all())
+    return render_template('view.html', values=User.query.all())
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
@@ -34,11 +17,11 @@ def login():
         session.permanent = True
         user = request.form['nm']
         session['user'] = user
-        found_user =users.query.filter_by(name=user).first()
+        found_user =User.query.filter_by(name=user).first()
         if found_user:
             session['email'] = found_user.email
         else:
-            usr = users(name=user, email=None)
+            usr = User(name=user, email=None)
             db.session.add(usr)
             db.session.commit()
 
@@ -60,7 +43,7 @@ def userhome():
         if request.method == 'POST':
             email = request.form['email']
             session['email'] = email
-            found_user = users.query.filter_by(name=user).first()
+            found_user = User.query.filter_by(name=user).first()
             found_user.email = email
             db.session.commit()
             flash('Email saved')
@@ -81,7 +64,7 @@ def logout():
     session.pop('email', None)
     return redirect(url_for('login'))
 
-if __name__ == '__main__':
-    db.create_all()
-    app.run(debug=True)
-
+@app.route('/earnings')
+def earnings():
+    values = db.session.query(earning).all()
+    return render_template('earnings.html', values=values)
