@@ -1,11 +1,11 @@
-import email, sqlalchemy
+import os
 from flask import Flask, redirect, render_template, request, url_for, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import timedelta
 
 app = Flask(__name__)
-app.secret_key = 'hello'
-app.config['SQLALCHEMY_DATABASE_URI'] ='sqlite:///users.sqlite3'
+app.secret_key = os.environ['FLASK_SECRET_KEY']
+app.config['SQLALCHEMY_DATABASE_URI'] =os.environ['DATABASE_URI']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.permanent_session_lifetime = timedelta(minutes=5)
 
