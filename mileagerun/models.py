@@ -10,4 +10,8 @@ class User(db.Model):
         self.name = name
         self.email = email
 
-earning = db.Table('earning_by_miles', db.metadata, autoload=True, autoload_with=db.engine)
+earnings = db.Table('earning_by_miles', db.metadata, autoload=True, autoload_with=db.engine)
+
+airlines = db.Table('airlines', db.metadata, autoload=True, autoload_with=db.engine)
+
+airports = db.Table('airports', db.metadata, autoload=True, autoload_with=db.engine)
