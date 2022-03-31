@@ -2,23 +2,34 @@
 
 
 import mysql.connector as sql
-import haversine
+from haversine import haversine, Unit
 import sys
-from connect_to_db import connect_to_db
 from re import match
+from mileagerun import db
+from mileagerun.models import *
 
 
-def main(origin, destination):
-    cnx = connect_to_db('db_config.csv')
-    cursor = cnx.cursor()
 
-    origin_coords = get_coordinates(airport=origin, cursor=cursor)
-    dest_coords = get_coordinates(airport=destination, cursor=cursor)
-    distance = calculate_distance(origin_coords, dest_coords)
+def calc_distance(origin, destination):
+    origin_model = db.session.query(airports).filter_by(iata_code=origin).first()
+    dest_model = db.session.query(airports).filter_by(iata_code=destination).first()
+
+    if not (origin_model and dest_model):
+        return 'Origin or destination not found.'
+
+    origin_coords = (origin_model.lat_decimal, origin_model.lon_decimal)
+    dest_coords = (dest_model.lat_decimal, dest_model.lon_decimal)
+
+    if not (origin_coords and dest_coords):
+        return 'Coordinates not found'
+
+    distance = round(haversine(origin_coords, dest_coords, unit=Unit.MILES))
+
     print(f"Origin: {origin}")
     print(f"Destination: {destination}")
     print(f"Miles flown: {str(round(distance))}")
-    cnx.close()
+
+    return distance
 
 
 def get_coordinates(airport: str, cursor):
@@ -47,18 +58,3 @@ def get_coordinates(airport: str, cursor):
         raise LookupError('Multiple coordinate sets found for airport entry.')
 
     return coords[0]
-
-
-def calculate_distance(origin: tuple, destination: tuple):
-    """Returns the distance in miles between two coordinate tuples.
-    
-    Paramters:
-        origin, destination:    coordinates in decimal, using negative values for south/west, ex (12.345, -123.456)
-    """
-    return haversine.haversine(origin, destination, unit=haversine.Unit.MILES)
-
-
-if __name__ == '__main__':
-    origin = sys.argv[1] if len(sys.argv) > 1 else 'LAX'
-    destination = sys.argv[2] if len(sys.argv) > 2 else 'JFK'
-    main(origin, destination)
