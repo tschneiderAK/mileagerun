@@ -1,11 +1,15 @@
 
 from flask import redirect, render_template, request, url_for, session, flash
-from mileagerun.models import User, earning
+from mileagerun.models import *
 from mileagerun import app, db
+from mileagerun.utils import miles_flown
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    origin = 'LAX'
+    destination = 'JFK'
+    distance = miles_flown.calc_distance(origin=origin, destination=destination)
+    return render_template('index.html', distance=distance)
 
 @app.route('/view')
 def view():
@@ -66,5 +70,5 @@ def logout():
 
 @app.route('/earnings')
 def earnings():
-    values = db.session.query(earning).all()
+    values = db.session.query(earnings).all()
     return render_template('earnings.html', values=values)
