@@ -3,6 +3,7 @@ from flask import redirect, render_template, request, url_for, session, flash
 from mileagerun.models import *
 from mileagerun import app, db
 from mileagerun.utils import miles_flown
+from mileagerun.forms import *
 
 @app.route('/')
 def home():
@@ -14,6 +15,12 @@ def home():
 @app.route('/view')
 def view():
     return render_template('view.html', values=User.query.all())
+
+@app.route('/register', methods=['POST', 'GET'])
+def register():
+    form = RegistrationForm()
+    form.validate_on_submit()
+    return render_template('register.html', form=form)
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
