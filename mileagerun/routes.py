@@ -5,12 +5,14 @@ from mileagerun import app, db
 from mileagerun.utils import miles_flown
 from mileagerun.forms import *
 
-@app.route('/')
+@app.route('/', methods=['POST', 'GET'])
 def home():
-    origin = 'LAX'
-    destination = 'JFK'
-    distance = miles_flown.calc_distance(origin=origin, destination=destination)
-    return render_template('index.html', distance=distance)
+    form = SampleFlight()    
+    if request.method == 'POST':
+        form = SampleFlight()
+        distance = miles_flown.calc_distance(origin=form.origin.data, destination=form.destination.data)
+        return render_template('index.html', distance=distance, form=form)
+    return render_template('index.html', distance=0, form=form)
 
 @app.route('/view')
 def view():

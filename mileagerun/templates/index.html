@@ -1,8 +1,82 @@
 {% extends 'base.html' %}
 {% block title %}Home{% endblock %}
 {% block content %}
-<h1>Home</h1>
+<form action="#" method="POST">
+    {{form.hidden_tag()}}
+    <fieldset class="form-control">
+        <legend>Join Today</legend>
+            <div class="form-group">
+                {{form.origin.label(class="form-control-label")}}
+                {% if form.origin.errors %}
+                    {{ form.origin(class="form-control is-invalid")}}
+                    <div class="invalid-feedback">
+                        {% for error in form.origin.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{form.origin(class="form-control")}}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{form.destination.label(class="form-control-label")}}
+                {% if form.destination.errors %}
+                    {{ form.destination(class="form-control is-invalid")}}
+                    <div class="invalid-feedback">
+                        {% for error in form.destination.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{form.destination(class="form-control")}}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{form.flown_airline.label(class="form-control-label")}}
+                {% if form.flown_airline.errors %}
+                    {{ form.flown_airline(class="form-control is-invalid")}}
+                    <div class="invalid-feedback">
+                        {% for error in form.flown_airline.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{form.flown_airline(class="form-control")}}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{form.credit_airline.label(class="form-control-label")}}
+                {% if form.credit_airline.errors %}
+                    {{ form.credit_airline(class="form-control is-invalid")}}
+                    <div class="invalid-feedback">
+                        {% for error in form.credit_airline.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{form.credit_airline(class="form-control")}}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{form.fare.label(class="form-control-label")}}
+                {% if form.fare.errors %}
+                    {{ form.fare(class="form-control is-invalid")}}
+                    <div class="invalid-feedback">
+                        {% for error in form.fare.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{form.fare(class="form-control")}}
+                {% endif %}
+            </div>
+        </fieldset>
+        <div class="form-group">
+            {{form.submit(class="form-control")}}
+        </div>
+</form>
 <p>Distance: {{distance}}</p>
+
 {% endblock%}
 
 
