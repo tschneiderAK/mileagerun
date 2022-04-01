@@ -1,4 +1,6 @@
 from mileagerun import db
+from flask_sqlalchemy import SQLAlchemy
+
 
 class User(db.Model):
     __tablename__ = "users"
@@ -9,6 +11,10 @@ class User(db.Model):
     def __init__(self, name, email) -> None:
         self.name = name
         self.email = email
+
+
+class Flight(db.Model):
+    __table__ = db.Table('flights', db.metadata, autoload=True, autoload_with=db.engine)
 
 earnings = db.Table('earning_by_miles', db.metadata, autoload=True, autoload_with=db.engine)
 
