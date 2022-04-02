@@ -5,10 +5,10 @@ from flask_sqlalchemy import SQLAlchemy
 class User(db.Model):
     __tablename__ = "users"
     _id = db.Column('id', db.Integer, primary_key=True)
-    first_name = db.Column(db.String(50))
-    last_name = db.Column(db.String(50))
-    password = db.Column(db.String(50))
-    email = db.Column(db.String(50))
+    first_name = db.Column(db.String(64))
+    last_name = db.Column(db.String(64))
+    password = db.Column(db.String(256))
+    email = db.Column(db.String(64))
 
     def __init__(self, first_name, last_name, email, password) -> None:
         self.first_name = first_name
