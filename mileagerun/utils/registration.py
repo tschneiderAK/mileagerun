@@ -1,4 +1,3 @@
-from sre_constants import SUCCESS
 from passlib.hash import pbkdf2_sha256
 from mileagerun import db
 from mileagerun.models import User
@@ -14,4 +13,4 @@ def new_user_registration(form):
                             password=pbkdf2_sha256.hash(form.password.data))
     db.session.add(registration)
     db.session.commit()
-    return flash('User registration successful!', category=SUCCESS)
+    return flash('User registration successful!')
