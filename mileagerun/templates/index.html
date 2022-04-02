@@ -3,7 +3,7 @@
 {% block content %}
     <div>
         {% from "_formhelper.html" import render_field %}
-        <form method=post action="#" class="form-control" style="width:33.3333%; flex:0 0 auto" novalidate>
+        <form method=post action="#" class="form-control" style="width:33.3333%; flex:0 0 auto" autocomplete="on" novalidate>
             {{ form.csrf_token }}
             <dl>
                 {{ render_field(form.origin, style='width: 100%') }}

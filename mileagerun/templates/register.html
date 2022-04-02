@@ -1,22 +1,23 @@
 {% extends 'base.html' %}
 {% block title %}Register{% endblock %}
 {% block content %}
-	<div class="form-control col-lg-3">
+	<div>
 		{% from "_formhelper.html" import render_field %}
-		<form method=post action="#" novalidate>
+		<form method="POST" action="#" class="form-control" novalidate>
 			{{ form.csrf_token }}
 			<dl>
-				{{ render_field(form.first_name) }}
-				{{ render_field(form.last_name) }}
-				{{ render_field(form.email) }}
-				{{ render_field(form.password) }}
-				{{ render_field(form.confirm) }}
+				{{ render_field(form.first_name, style="width:100%") }}
+				{{ render_field(form.last_name, style="width:100%") }}
+				{{ render_field(form.email, style="width:100%") }}
+				{{ render_field(form.password, style="width:100%") }}
+				{{ render_field(form.confirm, style="width:100%") }}
 				{{ render_field(form.accept_tos) }}
 			</dl>
-  <p><input type=submit value=Register>
-</form>
-	<div>
-		Already have an account? <a href="{{url_for('login')}}">Login</a>
-	</div>
+  			<p><input type=submit value=Register>
+		</form>
+		<div>
+			<p>* Marks required field.</p>
+			<p>Already have an account? <a href="{{url_for('login')}}">Login</a></p>
+		</div>
 	</div>
 {% endblock%}
