@@ -1,4 +1,3 @@
-
 from flask import redirect, render_template, request, url_for, session, flash
 from mileagerun.models import *
 from mileagerun import app, db
@@ -7,7 +6,7 @@ from mileagerun.forms import *
 
 @app.route('/', methods=['POST', 'GET'])
 def home():
-    form = SampleFlight()    
+    form = SampleFlightForm()    
     form.validate_on_submit()
     if request.method == 'POST':
         distance = miles_flown.calc_distance(origin=form.origin.data, destination=form.destination.data)
@@ -21,55 +20,44 @@ def view():
 @app.route('/register', methods=['POST', 'GET'])
 def register():
     form = RegistrationForm()
-    if form.is_submitted():
-        print('Form submitted')
-        print(form.csrf_token)
-    if form.validate_on_submit():
-        print('valid')
-
+    if request.method == 'POST' and form.validate_on_submit():
+        registration = User(first_name = form.first_name.data,
+                            last_name=form.last_name.data,
+                            email=form.email.data,
+                            password=form.password.data)
+        
+        db.session.add(registration)
+        db.session.commit()
+        return redirect(url_for('login'), code=307)
+        
     return render_template('register.html', form=form)
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
+    form = LoginForm()
     if request.method == 'POST':
-        session.permanent = True
-        user = request.form['nm']
-        session['user'] = user
-        found_user =User.query.filter_by(name=user).first()
-        if found_user:
-            session['email'] = found_user.email
+        email = form.email.data
+        user_password = User.query.filter_by(email=email).first().password
+        if user_password == form.password.data:
+            session.permanent = True
+            session['email'] = email
+            flash(f"Successfully logged in.")
+            return redirect(url_for('userhome'))
         else:
-            usr = User(name=user, email=None)
-            db.session.add(usr)
-            db.session.commit()
+            flash(f"Incorrect username or password.")
+            return redirect(url_for('login', email=form.email.data)) 
 
-        flash(f"Successfully logged in as {user}.")
-        return redirect(url_for('userhome'))
     else:
         if 'user' in session:
             user = session['user']
             flash(f"Logged in as {user}.")
             return redirect(url_for('userhome'))
-        return render_template('login.html')
+        return render_template('login.html', form=form)
 
 @app.route('/userhome', methods=['POST', 'GET']) 
 def userhome():
-    email = None
-    if 'user' in session:
-        user = session['user']
-
-        if request.method == 'POST':
-            email = request.form['email']
-            session['email'] = email
-            found_user = User.query.filter_by(name=user).first()
-            found_user.email = email
-            db.session.commit()
-            flash('Email saved')
-        else:
-            if 'email' in session:
-                email = session['email']
-
-        return render_template('userhome.html', email=email, user=user)
+    if 'email' in session:
+        return render_template('userhome.html', email=email)
     else:
         return redirect(url_for('login'))
 

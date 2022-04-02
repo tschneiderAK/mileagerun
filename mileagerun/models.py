@@ -5,12 +5,16 @@ from flask_sqlalchemy import SQLAlchemy
 class User(db.Model):
     __tablename__ = "users"
     _id = db.Column('id', db.Integer, primary_key=True)
-    name = db.Column(db.String(100))
-    email = db.Column(db.String(100))
+    first_name = db.Column(db.String(50))
+    last_name = db.Column(db.String(50))
+    password = db.Column(db.String(50))
+    email = db.Column(db.String(50))
 
-    def __init__(self, name, email) -> None:
-        self.name = name
+    def __init__(self, first_name, last_name, email, password) -> None:
+        self.first_name = first_name
+        self.last_name = last_name
         self.email = email
+        self.password = password
 
 
 class Flight(db.Model):
