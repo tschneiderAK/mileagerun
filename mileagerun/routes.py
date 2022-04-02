@@ -8,8 +8,8 @@ from mileagerun.forms import *
 @app.route('/', methods=['POST', 'GET'])
 def home():
     form = SampleFlight()    
+    form.validate_on_submit()
     if request.method == 'POST':
-        form = SampleFlight()
         distance = miles_flown.calc_distance(origin=form.origin.data, destination=form.destination.data)
         return render_template('index.html', distance=distance, form=form)
     return render_template('index.html', distance=0, form=form)
@@ -21,7 +21,12 @@ def view():
 @app.route('/register', methods=['POST', 'GET'])
 def register():
     form = RegistrationForm()
-    form.validate_on_submit()
+    if form.is_submitted():
+        print('Form submitted')
+        print(form.csrf_token)
+    if form.validate_on_submit():
+        print('valid')
+
     return render_template('register.html', form=form)
 
 @app.route('/login', methods=['POST', 'GET'])
