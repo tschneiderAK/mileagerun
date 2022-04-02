@@ -20,8 +20,14 @@ class User(db.Model):
 class Flight(db.Model):
     __table__ = db.Table('flights', db.metadata, autoload=True, autoload_with=db.engine)
 
-earnings = db.Table('earning_by_miles', db.metadata, autoload=True, autoload_with=db.engine)
 
-airlines = db.Table('airlines', db.metadata, autoload=True, autoload_with=db.engine)
+class EarningByMiles(db.Model):
+    __table__ = db.Table('earning_by_miles', db.metadata, autoload=True, autoload_with=db.engine)
 
-airports = db.Table('airports', db.metadata, autoload=True, autoload_with=db.engine)
+
+class Airlines(db.Model):
+    __table__ = db.Table('airlines', db.metadata, autoload=True, autoload_with=db.engine)
+
+
+class Airports(db.Model):
+    __table__ = db.Table('airports', db.metadata, autoload=True, autoload_with=db.engine)

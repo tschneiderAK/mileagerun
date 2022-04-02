@@ -1,7 +1,7 @@
 from flask import redirect, render_template, request, url_for, session, flash
 from mileagerun.models import *
 from mileagerun import app, db
-from mileagerun.utils import miles_flown, registration, user_login
+from mileagerun.utils import miles_flown, registration, user_login, testbed
 from mileagerun.forms import *
 
 @app.route('/', methods=['POST', 'GET'])
@@ -54,6 +54,7 @@ def login():
 @app.route('/userhome', methods=['POST', 'GET']) 
 def userhome():
     if 'email' in session:
+        email = session['email']
         return render_template('userhome.html', email=email)
     else:
         return redirect(url_for('login'))
@@ -69,5 +70,5 @@ def logout():
 
 @app.route('/earnings')
 def earnings():
-    values = db.session.query(earnings).all()
+    values = db.session.query(EarningByMiles, EarningByMiles.eqm_mult).all()
     return render_template('earnings.html', values=values)
