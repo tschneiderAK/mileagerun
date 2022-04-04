@@ -14,10 +14,10 @@ def home():
     form.validate_on_submit()
     if request.method == 'POST':
         distance = calc_distance(origin=form.origin.data, destination=form.destination.data)
-        earnings = miles_earned(miles=distance,
+        earnings = miles_earned(distance_flown=distance,
                                 credit_airline=form.credit_airline.data,
                                 flown_airline=form.flown_airline.data,
-                                flight_type=form.type,
+                                flight_type=form.type.data,
                                 fare_code=form.fare.data)
         return render_template('index.html', distance=distance, earnings=earnings, form=form, partners=get_partners())
     return render_template('index.html', distance=0, earnings=None, form=form, partners=get_partners())
@@ -25,7 +25,7 @@ def home():
 
 @app.route('/view')
 def view():
-    return render_template('view.html', values=User.query.all())
+    return render_template('view.html', values=EarningByMiles.query.all())
 
 
 @app.route('/register', methods=['POST', 'GET'])

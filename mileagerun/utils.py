@@ -1,6 +1,6 @@
 
 
-from flask import flash, jsonify
+from flask import flash, jsonify, redirect, url_for
 from haversine import haversine, Unit
 from passlib.hash import pbkdf2_sha256
 
@@ -88,7 +88,8 @@ def new_user_registration(form):
 
     email = form.email.data
     if User.query.filter_by(email=email).first():
-        return flash(f"Email {email} is already in use. Please login.")
+        flash(f"Email {email} is already in use. Please login.")
+        return redirect(url_for('login'))
     registration = User(first_name = form.first_name.data,
                             last_name=form.last_name.data,
                             email=form.email.data,
