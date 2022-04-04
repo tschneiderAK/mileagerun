@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% block title %}Home{% endblock %}
 {% block content %}
+    <div id="partnersJSON" onclick="checkCreditAirlines()">
+        {{ partners }}
+    </div>
     <div>
         {% from "_formhelper.html" import render_field %}
         <form method=post action="#" class="form-control" style="width:33.3333%; flex:0 0 auto" autocomplete="on" novalidate>
@@ -8,15 +11,21 @@
             <dl>
                 {{ render_field(form.origin, style='width: 100%') }}
                 {{ render_field(form.destination, style='width: 100%') }}
-                {{ render_field(form.flown_airline, style='width: 100%') }}
+                {{ render_field(form.flown_airline, style='width: 100%', id='flownAirline', onchange='helloWorld()') }}
                 {{ render_field(form.credit_airline, style='width: 100%') }}
                 {{ render_field(form.fare, style='width: 100%') }}
+                {{ render_field(form.type, style='width: 100%') }}
+
             </dl>
             <p><input type=submit value="Calculate Miles">
         </form>
     </div>
-<p>Distance: {{distance}}</p>
-
+<p>Distance: {{ distance }}</p>
+{% if earnings %}
+    <p>Redeemable Miles: {{ earnings['rdm'] }}</p>
+    <p>Elite Qualifying Miles: {{ earnings['eqm'] }}</p>
+    <p>Elite Qualifying Dollars: {{ earnings['eqd'] }}</p>
+{% endif %}
 {% endblock%}
 
 
