@@ -1,6 +1,6 @@
 from email.charset import Charset
 from flask_wtf import FlaskForm
-from wtforms import StringField, EmailField, PasswordField, BooleanField, SubmitField, validators
+from wtforms import StringField, EmailField, PasswordField, BooleanField, SubmitField, SelectField, validators
 from wtforms.validators import *
 
 class RegistrationForm(FlaskForm):
@@ -25,7 +25,8 @@ class LoginForm(FlaskForm):
 class SampleFlightForm(FlaskForm):
     origin = StringField('Origin Airport', validators=[DataRequired(), Regexp('^[a-zA-Z]{3}$', message='Input a 3-letter airport code.')], default='LAX')
     destination = StringField('Destination Airport', validators=[DataRequired(), Regexp('^[a-zA-Z]{3}$', message='Input a 3-letter airport code.')], default='JFK')
-    flown_airline = StringField('Airline Flown', validators=[DataRequired(), Regexp("[a-zA-Z]{2}")], default='AF')
+    flown_airline = SelectField(u'Airline Flown', choices=[('DL', 'Delta'), ('AF', 'Air France'), ('AM', 'Aero Mexico')])
     credit_airline = StringField('Airline Credited', validators=[DataRequired(), Regexp("[a-zA-Z]{2}")], default='DL')
     fare = StringField('Fare Code', validators=[DataRequired(), Regexp("[a-zA-Z]")], default='Z')
+    type = SelectField(u'Trip Type', choices=[('EX-EUROPE', 'Ex-Europe International'), ('INTRA-EUROPE', 'Intra-Europe'), ('STANDARD', 'Standard AM')])
     submit = SubmitField('Submit')
