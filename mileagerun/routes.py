@@ -1,7 +1,8 @@
 from flask import redirect, render_template, request, url_for, session, flash
 from mileagerun.models import *
 from mileagerun import app, db
-from mileagerun.utils import miles_flown, registration, user_login, testbed
+from mileagerun.utilities import get_partners
+from mileagerun.utils import miles_earned, miles_flown, registration, user_login
 from mileagerun.forms import *
 
 @app.route('/', methods=['POST', 'GET'])
@@ -11,8 +12,13 @@ def home():
     form.validate_on_submit()
     if request.method == 'POST':
         distance = miles_flown.calc_distance(origin=form.origin.data, destination=form.destination.data)
-        return render_template('index.html', distance=distance, form=form)
-    return render_template('index.html', distance=0, form=form)
+        earnings = miles_earned.miles_earned(miles=distance,
+                                                credit_airline=form.credit_airline.data,
+                                                flown_airline=form.flown_airline.data,
+                                                flight_type='EX-EUROPE',
+                                                fare_code=form.fare.data)
+        return render_template('index.html', distance=distance, earnings=earnings, form=form, partners=get_partners())
+    return render_template('index.html', distance=0, earnings=None, form=form, partners=get_partners())
 
 
 @app.route('/view')
@@ -70,5 +76,5 @@ def logout():
 
 @app.route('/earnings')
 def earnings():
-    values = db.session.query(EarningByMiles, EarningByMiles.eqm_mult).all()
+    values = db.session.query(EarningByMiles).all()
     return render_template('earnings.html', values=values)
