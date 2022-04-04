@@ -1,9 +1,9 @@
 from flask import redirect, render_template, request, url_for, session, flash
-from mileagerun.models import *
+from mileagerun.models import EarningByMiles
 from mileagerun import app, db
-from mileagerun.utilities import get_partners
-from mileagerun.utils import miles_earned, miles_flown, registration, user_login
-from mileagerun.forms import *
+from mileagerun.utilities import get_partners, miles_earned, calc_distance, new_user_registration, authenticate_password
+from mileagerun.forms import SampleFlightForm, RegistrationForm, LoginForm
+
 
 @app.route('/', methods=['POST', 'GET'])
 @app.route('/index')
@@ -11,8 +11,8 @@ def home():
     form = SampleFlightForm()    
     form.validate_on_submit()
     if request.method == 'POST':
-        distance = miles_flown.calc_distance(origin=form.origin.data, destination=form.destination.data)
-        earnings = miles_earned.miles_earned(miles=distance,
+        distance = calc_distance(origin=form.origin.data, destination=form.destination.data)
+        earnings = miles_earned(miles=distance,
                                                 credit_airline=form.credit_airline.data,
                                                 flown_airline=form.flown_airline.data,
                                                 flight_type='EX-EUROPE',
@@ -30,7 +30,7 @@ def view():
 def register():
     form = RegistrationForm()
     if request.method == 'POST' and form.validate_on_submit():
-        registration.new_user_registration(form)
+        new_user_registration(form)
         return redirect(url_for('login'))
     return render_template('register.html', form=form)
 
@@ -41,7 +41,7 @@ def login():
     if request.method == 'POST':
         email = form.email.data
         password = form.password.data
-        if user_login.verify_password(email=email, password=password):
+        if authenticate_password(email=email, password=password):
             session.permanent = True
             session['email'] = email
             flash(f"Successfully logged in.")
