@@ -1,14 +1,15 @@
 from email.charset import Charset
+
 from flask_wtf import FlaskForm
 from wtforms import StringField, EmailField, PasswordField, BooleanField, SubmitField, SelectField, validators
-from wtforms.validators import *
+from wtforms.validators import DataRequired, Email, EqualTo, Length, Regexp
 
 class RegistrationForm(FlaskForm):
-    first_name = StringField('First Name', validators=[Length(min=1, max=50)])
-    last_name = StringField('Last Name', validators=[Length(min=1, max=50)])
+    first_name = StringField('First Name', validators=[Length(min=1, max=64)])
+    last_name = StringField('Last Name', validators=[Length(min=1, max=64)])
     email = EmailField('Email*', validators=[DataRequired(),
                                              Email(message='Not a valid email'),
-                                             Length(max=50)])
+                                             Length(max=64)])
     password = PasswordField('Password*', validators=[DataRequired(),
                                                      EqualTo('confirm', message='Passwords must match.'),
                                                      Length(min=8, max=20)])
