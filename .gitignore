@@ -131,11 +131,7 @@ dmypy.json
 #API keys and user configs
 /config
 
-#Data pulled from API
-/Data
-
-#preference files and other
-/src/.vscode/
+#development and preference files
+/deprecated
 todo.txt
 .vscode/
-src/testbed.py
