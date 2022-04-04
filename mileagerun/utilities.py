@@ -1,5 +1,4 @@
-from re import match
-from string import upper
+
 
 from flask import flash, jsonify
 from haversine import haversine, Unit
@@ -106,7 +105,7 @@ def authenticate_password(email: str, password: str):
     :param str password: Password to be authenticated.
     :return: Authentication status.
     :rtype: bool
-    
+
     """
 
     if not (email and password):
