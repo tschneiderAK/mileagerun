@@ -2,8 +2,8 @@ from flask import redirect, render_template, request, url_for, session, flash
 
 from mileagerun import app, db
 from mileagerun.forms import LoginForm, RegistrationForm, SampleFlightForm
-from mileagerun.models import EarningByMiles
-from mileagerun.utilities import authenticate_password, calc_distance, get_partners, miles_earned, new_user_registration 
+from mileagerun.models import EarningByMiles, User
+from mileagerun.utils import authenticate_password, calc_distance, get_partners, miles_earned, new_user_registration 
 
 
 
