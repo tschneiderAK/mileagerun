@@ -11,8 +11,8 @@ from mileagerun.models import *
 
 
 def calc_distance(origin, destination):
-    origin_model = db.session.query(airports).filter_by(iata_code=origin).first()
-    dest_model = db.session.query(airports).filter_by(iata_code=destination).first()
+    origin_model = db.session.query(Airports).filter_by(iata_code=origin).first()
+    dest_model = db.session.query(Airports).filter_by(iata_code=destination).first()
 
     if not (origin_model and dest_model):
         return 'Origin or destination not found.'
@@ -24,11 +24,6 @@ def calc_distance(origin, destination):
         return 'Coordinates not found'
 
     distance = round(haversine(origin_coords, dest_coords, unit=Unit.MILES))
-
-    print(f"Origin: {origin}")
-    print(f"Destination: {destination}")
-    print(f"Miles flown: {str(round(distance))}")
-
     return distance
 
 
