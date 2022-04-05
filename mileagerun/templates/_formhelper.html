@@ -1,7 +1,7 @@
 {% macro render_field(field) %}
   <dt>{{ field.label }}
   <dd>{{ field(**kwargs)|safe }}
-  {% if field.errors %}
+  {% if field.errors and error_raise %}
     <ul class="invalid-feedback list-unstyled" style="display:inline-block">
     {% for error in field.errors %}
       <li>{{ error }}</li>
