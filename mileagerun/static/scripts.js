@@ -1,11 +1,16 @@
-function helloWorld(){
-    console.log('Hello, world')
-}
+async function getPartners() {
+    let flown = document.getElementById('flown-airline-select');
+    let credit = document.getElementById('credit-airline-select');
+    
+    let response = await fetch('/partners/' + flown.value);
+    let partnerJSON = await response.json();
+    
+    console.table(partnerJSON)
+    
+    options = '';
+    for (let result of partnerJSON['credit airlines']) {
+        options += '<option value="' + result + '">' + result + '</option>';
 
-function checkCreditAirlines(){
-    var partnersJSON = document.getElementById("partnersJSON");
-    var partners = JSON.parse(partnersJSON);
-    console.log('Air France:');
-    console.log(partners.AF);
-
+    credit.innerHTML = options;
+    }
 }

@@ -1,4 +1,4 @@
-
+from json import dumps
 
 from flask import flash, jsonify, redirect, url_for
 from haversine import haversine, Unit
@@ -17,12 +17,16 @@ def get_partners():
     :rtype: JSON
 
     """
-    partners = {}
+    partners = []
     for airline in db.session.query(Earning.flown_airline).distinct().all():
-        partners[airline[0]] = [r[0] for r in db.session.query(Earning.credit_airline).distinct().all()]
+        partnerObj = {}
+        partnerObj['flown'] = airline[0]
+        partnerObj['credited'] = [r[0] for r in db.session.query(Earning.credit_airline).distinct().all()]
+        partners.append(partnerObj)
 
-    partners = jsonify(partners)
-    return partners
+    print(partners)
+    return jsonify({'partnerships' : partners})
+
 
 def miles_earned(distance_flown: float, credit_airline: str, flown_airline: str,flight_type: str, fare_code: str):
     """

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}Home{% endblock %}
 {% block content %}
-    <div id="partnersJSON" onclick="checkCreditAirlines()">
+    <div id="partnersJSON" onclick="getPartners()">
         {{ partners }}
     </div>
     <div>
@@ -9,10 +9,10 @@
         <form method=post action="#" class="form-control" style="width:33.3333%; flex:0 0 auto" autocomplete="on" novalidate>
             {{ form.csrf_token }}
             <dl>
-                {{ render_field(form.origin, style='width: 100%') }}
+                {{ render_field(form.origin, style='width: 100%', error_raise=True) }}
                 {{ render_field(form.destination, style='width: 100%') }}
-                {{ render_field(form.flown_airline, style='width: 100%', id='flownAirline', onchange='helloWorld()') }}
-                {{ render_field(form.credit_airline, style='width: 100%') }}
+                {{ render_field(form.flown_airline, style='width: 100%', id='flown-airline-select', onchange='getPartners()') }}
+                {{ render_field(form.credit_airline, style='width: 100%', id='credit-airline-select', error_raise=False) }}
                 {{ render_field(form.fare, style='width: 100%') }}
                 {{ render_field(form.type, style='width: 100%') }}
 
