@@ -12,7 +12,7 @@
                 {{ render_field(form.origin, style='width: 100%', error_raise=True) }}
                 {{ render_field(form.destination, style='width: 100%') }}
                 {{ render_field(form.flown_airline, style='width: 100%', id='flown-airline-select', onchange='getPartners()') }}
-                {{ render_field(form.credit_airline, style='width: 100%', id='credit-airline-select', error_raise=False) }}
+                {{ render_field(form.credit_airline, style='width: 100%', id='credit-airline-select', onclick='getPartners()', error_raise=False) }}
                 {{ render_field(form.fare, style='width: 100%') }}
                 {{ render_field(form.type, style='width: 100%') }}
 
