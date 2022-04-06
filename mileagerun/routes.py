@@ -12,8 +12,7 @@ from mileagerun.utils import authenticate_password, calc_distance, get_partners,
 def home():
     form = SampleFlightForm()    
     
-    if request.method == 'POST':
-        form.validate_on_submit()
+    if request.method == 'POST' and form.validate_on_submit(): 
         distance = calc_distance(origin=form.origin.data, destination=form.destination.data)
         earnings = miles_earned(distance_flown=distance,
                                 credit_airline=form.credit_airline.data,
@@ -90,3 +89,7 @@ def partners(flown):
         credit_airlines.append(result[0])
     print(credit_airlines)
     return jsonify({'credit airlines' : credit_airlines})
+
+@app.route('/airports')
+def airports():
+    return jsonify(['Los Angeles', 'New York'])
