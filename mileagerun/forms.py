@@ -24,7 +24,7 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Submit')
 
 class SampleFlightForm(FlaskForm):
-    origin = StringField('Origin Airport', validators=[DataRequired(), Regexp('^[a-zA-Z]{3}$', message='Input a 3-letter airport code.')], default='LAX')
+    origin = StringField('Origin Airport', validators=[DataRequired(), Regexp('^[a-zA-Z]{3}$', message='Not a valid airport.')])
     destination = StringField('Destination Airport', validators=[DataRequired(), Regexp('^[a-zA-Z]{3}$', message='Input a 3-letter airport code.')], default='JFK')
     flown_airline = SelectField(u'Airline Flown', choices=[('DL', 'Delta'), ('AF', 'Air France'), ('AM', 'Aero Mexico')])
     credit_airline = SelectField(u'Airline Credited', choices=[('DL', 'Delta')])
