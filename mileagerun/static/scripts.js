@@ -32,9 +32,6 @@ async function getCreditedToFlown() {
     }
 }
 
-
-$('.basicAutoComplete').autoComplete({
-    resolverSettings: {
-        url: '/airports.json'
-    }
-});
+  $(document).ready(function(){
+    $('.combobox').combobox();
+  });

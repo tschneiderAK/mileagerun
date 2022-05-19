@@ -123,7 +123,7 @@ def authenticate_password(email: str, password: str):
         return False
 
 def get_airlines():
-    airlines = []
+    airlines = [('', None)]
     for iata_code, full_name in db.session.query(Airlines.iata_code, Airlines.full_name):
         airlines.append((iata_code, full_name))
     return airlines
