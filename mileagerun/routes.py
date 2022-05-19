@@ -1,3 +1,5 @@
+import json
+
 from flask import redirect, render_template, request, url_for, session, flash, jsonify
 
 from mileagerun import app, db
@@ -81,8 +83,8 @@ def earnings():
     values = db.session.query(E).all()
     return render_template('earnings.html', values=values)
 
-@app.route('/partners/<flown>')
-def partners(flown):
+@app.route('/flown-to-credited/<flown>')
+def flown_to_credit(flown):
     credit_airlines = []
     qry = db.session.query(E.credit_airline).filter_by(flown_airline=flown).distinct().all()
     for result in qry:
@@ -90,6 +92,15 @@ def partners(flown):
     print(credit_airlines)
     return jsonify({'credit airlines' : credit_airlines})
 
-@app.route('/airports')
+@app.route('/credited-to-flown/<credited>')
+def credit_to_flown(credited):
+    flown_airlines = []
+    qry = db.session.query(E.credit_airline).filter_by(credit_airline=credited).distinct().order_by(E.credit_airline).all()
+    for result in qry:
+        flown_airlines.append(result[0])
+    print(flown_airlines)
+    return jsonify({'flown airlines' : flown_airlines})
+
+@app.route('/airports.json')
 def airports():
-    return jsonify(['Los Angeles', 'New York'])
+    return jsonify(['Los Angeles', 'New York, John F. Kennedy'])
