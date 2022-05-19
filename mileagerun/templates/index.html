@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}Home{% endblock %}
 {% block content %}
-    <div id="partnersJSON" onclick="getPartners()">
+    <div id="partnersJSON" onclick="getFlownToCredited()">
         {{ partners }}
     </div>
     <div>
@@ -9,10 +9,11 @@
         <form method=post action="#" class="form-control" style="width:33.3333%; flex:0 0 auto" autocomplete="on" novalidate>
             {{ form.csrf_token }}
             <dl>
-                {{ render_field(form.origin, style='width: 100%', error_raise=True) }}
-                {{ render_field(form.destination, style='width: 100%') }}
-                {{ render_field(form.flown_airline, style='width: 100%', id='flown-airline-select', onchange='getPartners()') }}
-                {{ render_field(form.credit_airline, style='width: 100%', id='credit-airline-select', onclick='getPartners()', error_raise=False) }}
+                
+                {{ render_field(form.origin, style='width: 100%', class='basicAutoComplete', error_raise=True) }}
+                {{ render_field(form.destination, style='width: 100%', class='basicAutoComplete') }}
+                {{ render_field(form.flown_airline, style='width: 100%', id='flown-airline-select', onchange='getFlownToCredited()') }}
+                {{ render_field(form.credit_airline, style='width: 100%', id='credit-airline-select', onclick='getCreditedToFlown()', error_raise=False) }}
                 {{ render_field(form.fare, style='width: 100%') }}
                 {{ render_field(form.type, style='width: 100%') }}
 
@@ -26,6 +27,10 @@
     <p>Elite Qualifying Miles: {{ earnings['eqm'] }}</p>
     <p>Elite Qualifying Dollars: {{ earnings['eqd'] }}</p>
 {% endif %}
+<input class="form-control basicAutoComplete" type="text" autocomplete="off">
+
 {% endblock%}
+
+
 
 
