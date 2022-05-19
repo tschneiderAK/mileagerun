@@ -1,9 +1,10 @@
+from sqlalchemy import ForeignKey
 from mileagerun import db
 from flask_sqlalchemy import SQLAlchemy
 
 
 class User(db.Model):
-    __tablename__ = "users"
+    __tablename__ = 'users'
     _id = db.Column('id', db.Integer, primary_key=True)
     first_name = db.Column(db.String(64))
     last_name = db.Column(db.String(64))
@@ -15,6 +16,12 @@ class User(db.Model):
         self.last_name = last_name
         self.email = email
         self.password = password
+
+class FlightType(db.Model):
+    __tablename__ = 'flight_types'
+    _id = db.Column('id', db.Integer, primary_key=True)
+    airline = db.Column(db.String(64), ForeignKey('airlines.iata_code'), nullable=False)
+    description = db.Column(db.String(64), nullable=False)
 
 
 class Flight(db.Model):
