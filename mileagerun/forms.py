@@ -4,6 +4,8 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, EmailField, PasswordField, BooleanField, SubmitField, SelectField, validators
 from wtforms.validators import DataRequired, Email, EqualTo, Length, Regexp
 
+from mileagerun.utils import get_airlines
+
 class RegistrationForm(FlaskForm):
     first_name = StringField('First Name', validators=[Length(min=1, max=64)])
     last_name = StringField('Last Name', validators=[Length(min=1, max=64)])
@@ -24,10 +26,10 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Submit')
 
 class SampleFlightForm(FlaskForm):
+    credit_airline = SelectField(u'Airline Credited', choices=get_airlines())
     origin = StringField('Origin Airport', validators=[DataRequired(), Regexp('^[a-zA-Z]{3}$', message='Not a valid airport.')])
     destination = StringField('Destination Airport', validators=[DataRequired(), Regexp('^[a-zA-Z]{3}$', message='Input a 3-letter airport code.')], default='JFK')
-    flown_airline = SelectField(u'Airline Flown', choices=[('DL', 'Delta'), ('AF', 'Air France'), ('AM', 'Aero Mexico')])
-    credit_airline = SelectField(u'Airline Credited', choices=[('DL', 'Delta')])
+    flown_airline = SelectField(u'Airline Flown', choices=get_airlines())
     fare = StringField('Fare Code', validators=[DataRequired(), Regexp("[a-zA-Z]")], default='Z')
     type = SelectField(u'Trip Type', choices=[('EX-EUROPE', 'Ex-Europe International'), ('INTRA-EUROPE', 'Intra-Europe'), ('STANDARD', 'Standard AM')])
     submit = SubmitField('Submit')
