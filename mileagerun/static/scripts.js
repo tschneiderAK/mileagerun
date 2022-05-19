@@ -33,3 +33,8 @@ async function getCreditedToFlown() {
 }
 
 
+$('.basicAutoComplete').autoComplete({
+    resolverSettings: {
+        url: '/airports.json'
+    }
+});
