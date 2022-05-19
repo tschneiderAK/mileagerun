@@ -5,7 +5,7 @@ from haversine import haversine, Unit
 from passlib.hash import pbkdf2_sha256
 
 from mileagerun import db
-from mileagerun.models import EarningByMiles as Earning
+from mileagerun.models import EarningByMiles as E, Airlines
 from mileagerun.models import User, Airports
 
 
@@ -18,10 +18,10 @@ def get_partners():
 
     """
     partners = []
-    for airline in db.session.query(Earning.flown_airline).distinct().all():
+    for airline in db.session.query(E.flown_airline).distinct().all():
         partnerObj = {}
         partnerObj['flown'] = airline[0]
-        partnerObj['credited'] = [r[0] for r in db.session.query(Earning.credit_airline).distinct().all()]
+        partnerObj['credited'] = [r[0] for r in db.session.query(E.credit_airline).distinct().all()]
         partners.append(partnerObj)
 
     print(partners)
@@ -42,10 +42,10 @@ def miles_earned(distance_flown: float, credit_airline: str, flown_airline: str,
 
     """
     # Query multiplier values mapper to the 'Earning' model.
-    multipliers = db.session.query(Earning).filter(Earning.credit_airline==credit_airline.upper()).\
-                                                filter(Earning.flown_airline==flown_airline.upper()).\
-                                                filter(Earning.flight_type==flight_type).\
-                                                filter(Earning.fare_code==fare_code.upper()).first()
+    multipliers = db.session.query(E).filter(E.credit_airline==credit_airline.upper()).\
+                                                filter(E.flown_airline==flown_airline.upper()).\
+                                                filter(E.flight_type==flight_type).\
+                                                filter(E.fare_code==fare_code.upper()).first()
 
     rdm = round(distance_flown * multipliers.total_rdm_mult) # Redeemable miles (rdm) earned in the credit airline's frequent flyer currency
     eqm = round(distance_flown * multipliers.eqm_mult)       # Elite qualifying miles as defined by the credit airline
@@ -121,3 +121,9 @@ def authenticate_password(email: str, password: str):
         return True
     else:
         return False
+
+def get_airlines():
+    airlines = []
+    for iata_code, full_name in db.session.query(Airlines.iata_code, Airlines.full_name):
+        airlines.append((iata_code, full_name))
+    return airlines
