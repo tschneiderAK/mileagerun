@@ -5,8 +5,7 @@ from haversine import haversine, Unit
 from passlib.hash import pbkdf2_sha256
 
 from mileagerun import db
-from mileagerun.models import EarningByMiles as E, Airlines
-from mileagerun.models import User, Airports
+from mileagerun.models import Airlines, Airports, EarningByMiles as E, User
 
 
 def get_partners():
@@ -123,7 +122,30 @@ def authenticate_password(email: str, password: str):
         return False
 
 def get_airlines():
-    airlines = [('', None)]
+    airlines = [(None, '')]
     for iata_code, full_name in db.session.query(Airlines.iata_code, Airlines.full_name):
         airlines.append((iata_code, full_name))
     return airlines
+
+def get_airports():
+    airports = [(None, '')]
+    for iata_code, airport_name in db.session.query(Airports.iata_code, Airports.airport_name):
+        display = iata_code + ': ' + airport_name
+        airports.append((iata_code, display))
+    return airports
+
+def get_fare_codes(airline):
+    if not airline:
+        return (None, '')
+    fare_codes = []
+    for code in db.session.query(E.fare_code).filter(E.flown_airline == airline):
+        fare_codes.append((code, code))
+    return fare_codes
+
+def get_flight_type(flown_airline, credit_airline):
+    if not flown_airline and credit_airline:
+        return (None, '')
+    flight_types = []
+    for type in db.session.query(E.flight_type).filter(E.flown_airline == flown_airline, E.credit_airline == credit_airline):
+        flight_types.append((type, type))
+    return flight_types
