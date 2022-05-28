@@ -1,4 +1,4 @@
-# flight-finder
+# Mileagerun
 Calculates frequent flyer miles earned based on the earning airline and the marketing/operating airline.
 
 Usage:
@@ -14,4 +14,3 @@ Returns the total rdm earned on a flight based on the distance flown, carriers, 
         flown_airline (str):    2-letter IATA code for airline flown.
         fare_code (str):        Single-letter fare code (A-Z).
 
-Test re-name.
