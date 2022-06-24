@@ -122,15 +122,15 @@ def authenticate_password(email: str, password: str):
         return False
 
 def get_airlines():
-    airlines = [(None, '')]
+    airlines = [(None, 'Type to search...')]
     for iata_code, full_name in db.session.query(Airlines.iata_code, Airlines.full_name):
         airlines.append((iata_code, full_name))
     return airlines
 
 def get_airports():
     airports = [(None, '')]
-    for iata_code, airport_name in db.session.query(Airports.iata_code, Airports.airport_name):
-        display = iata_code + ': ' + airport_name
+    for iata_code, airport_name, city, country in db.session.query(Airports.iata_code, Airports.airport_name, Airports.city, Airports.country).limit(20):
+        display = f"{iata_code}: {airport_name} ({city}, {country})"
         airports.append((iata_code, display))
     return airports
 

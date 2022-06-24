@@ -2,9 +2,9 @@ import json
 
 from flask import redirect, render_template, request, url_for, session, flash, jsonify
 
-from mileagerun import app, db
+from mileagerun import app, db, utils
 from mileagerun.forms import LoginForm, RegistrationForm, SampleFlightForm
-from mileagerun.models import EarningByMiles as E, User
+from mileagerun.models import EarningByMiles as E, User, Airlines
 from mileagerun.utils import authenticate_password, calc_distance, get_partners, miles_earned, new_user_registration 
 
 
@@ -83,16 +83,18 @@ def earnings():
     values = db.session.query(E).all()
     return render_template('earnings.html', values=values)
 
-@app.route('/flown-to-credited/<flown>')
+@app.route('/data/flown-to-credited/<flown>')
 def flown_to_credit(flown):
     credit_airlines = []
-    qry = db.session.query(E.credit_airline).filter_by(flown_airline=flown).distinct().all()
-    for result in qry:
-        credit_airlines.append(result[0])
+    for iata_code, full_name in  db.session.query(E.credit_airline, Airlines.full_name).\
+            filter_by(flown_airline=flown).\
+            join(Airlines, E.credit_airline==Airlines.iata_code).\
+            distinct().all():
+        credit_airlines.append((iata_code, full_name))
     print(credit_airlines)
     return jsonify({'credit airlines' : credit_airlines})
 
-@app.route('/credited-to-flown/<credited>')
+@app.route('/data/credited-to-flown/<credited>')
 def credit_to_flown(credited):
     flown_airlines = []
     qry = db.session.query(E.credit_airline).filter_by(credit_airline=credited).distinct().order_by(E.credit_airline).all()
@@ -101,6 +103,11 @@ def credit_to_flown(credited):
     print(flown_airlines)
     return jsonify({'flown airlines' : flown_airlines})
 
-@app.route('/airports.json')
+@app.route('/data/airports.json')
 def airports():
-    return jsonify(['Los Angeles', 'New York, John F. Kennedy'])
+    #return jsonify(utils.get_airports())
+    return jsonify(["LAX", "Los Angeles"])
+
+@app.route('/data/fare-codes/<flown>')
+def fare_codes(flown):
+    return jsonify({'codes': ['A','B','C']})

@@ -7,7 +7,7 @@ async function getFlownToCredited() {
     let flown = document.getElementById('flown-airline-select');
     let credit = document.getElementById('credit-airline-select');
     
-    let response = await fetch('/flown-to-credited/' + flown.value);
+    let response = await fetch('data/flown-to-credited/' + flown.value);
     let flownToCreditJSON = await response.json();
     
     console.table(flownToCreditJSON)
@@ -24,7 +24,7 @@ async function getCreditedToFlown() {
     let flown = document.getElementById('flown-airline-select');
     let credit = document.getElementById('credit-airline-select');
     
-    let response = await fetch('/credited-to-flown/' + credit.value);
+    let response = await fetch('data/credited-to-flown/' + credit.value);
     let creditToFlownJSON = await response.json();
     
     console.table(creditToFlownJSON)
@@ -42,7 +42,7 @@ async function getFareCodes() {
 
     if (flown.value) {
         let fareCode = document.getElementById('fare-code-select');
-        let response = await fetch('/fare-codes/' + flown.value);
+        let response = await fetch('data/fare-codes/' + flown.value);
         let fareCodesJSON = await response.json();
     
         console.table(fareCodesJSON)
@@ -56,19 +56,8 @@ async function getFareCodes() {
     }
 }
 
-// WTForms does not support passing the data-url property to form fields.
-// This function will add this property once loaded.
-// function addDataURL() {}
-//     let url = 'aiports.json';
-//     let field = document.getElementById('origin-select')
-//     field.
-
+// Call bootstrap-autocomplete for the specified fields.
 
   $(document).ready(function(){
-
-    $('#origin-select').autoComplete({
-        resolverSettings: {
-            url: 'airports.json'
-        }
-    });
-  });
+    $('.js-select2').select2();
+      });

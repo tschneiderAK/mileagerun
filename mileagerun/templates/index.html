@@ -6,30 +6,38 @@
     </div>
     <div>
         {% from "_formhelper.html" import render_field %}
-        <form method=post action="#" class="form-control" style="width:100%; flex:0 0 auto" autocomplete="on" novalidate>
+        <form method=post action="#" style="width:100%; flex:0 0 auto" autocomplete="on" novalidate>
             {{ form.csrf_token }}
             <dl>
-                
+                <div id='origin-select'>
                 {{ render_field(form.origin, 
-                                class='combobox form-control', 
-                                error_raise=True) }}
+                                class='input-large form-control js-select2',
+                                placeholder='Type to search...',
+                                autocomplete='off', 
+                                error_raise=True) }}</div>
                 {{ render_field(form.destination, 
-                                class='combobox form-control') }}
+                                class='input-large form-control js-select2',
+                                id='destination-select',
+                                placeholder='Type to search...',
+                                autocomplete='off',
+                                error_raise='True') }}
                 {{ render_field(form.flown_airline, 
-                                class='combobox form-control', 
+                                class='input-large form-control js-select2', 
                                 id='flown-airline-select', 
-                                onchange='getFlownToCredited()') }}
+                                onchange='updateFlown()') }}
                 {{ render_field(form.credit_airline, 
-                                class='combobox form-control', 
+                                class='input-large form-control js-select2', 
                                 id='credit-airline-select', 
                                 onclick='getCreditedToFlown()', 
                                 error_raise=False) }}
                 {{ render_field(form.fare,
-                                class='form-control', 
+                                id='fare-code-select',
+                                class='form-select js-select2', 
                                 style='width: 100%') }}
                 {{ render_field(form.type, 
-                                class='form-control',
+                                class='form-select js-select2',
                                 style='width: 100%') }}
+
 
             </dl>
             <p><input type=submit value="Calculate Miles">

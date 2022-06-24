@@ -27,7 +27,7 @@ class LoginForm(FlaskForm):
 
 class SampleFlightForm(FlaskForm):
     credit_airline = SelectField(u'Airline Credited', choices=get_airlines())
-    origin = SelectField('Origin Airport', choices=get_airports())
+    origin = SelectField('Origin Airport')
     destination = SelectField('Destination Airport', choices=get_airports())
     flown_airline = SelectField(u'Airline Flown', choices=get_airlines())
     fare = SelectField(u'Fare Code', choices=get_fare_codes(flown_airline))
