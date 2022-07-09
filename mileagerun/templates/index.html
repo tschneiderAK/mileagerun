@@ -9,16 +9,14 @@
         <form method=post action="#" style="width:100%; flex:0 0 auto" autocomplete="on" novalidate>
             {{ form.csrf_token }}
             <dl>
-                <div id='origin-select'>
                 {{ render_field(form.origin, 
-                                class='input-large form-control js-select2',
-                                placeholder='Type to search...',
+                                class='input-large form-control',
+                                id='origin-select',
                                 autocomplete='off', 
-                                error_raise=True) }}</div>
+                                error_raise=True) }}
                 {{ render_field(form.destination, 
-                                class='input-large form-control js-select2',
+                                class='input-large form-control',
                                 id='destination-select',
-                                placeholder='Type to search...',
                                 autocomplete='off',
                                 error_raise='True') }}
                 {{ render_field(form.flown_airline, 

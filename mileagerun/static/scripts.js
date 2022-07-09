@@ -61,3 +61,7 @@ async function getFareCodes() {
   $(document).ready(function(){
     $('.js-select2').select2();
       });
+
+    $(document).ready(function(){
+    $('#destination-select, #origin-select').select2();
+        });
