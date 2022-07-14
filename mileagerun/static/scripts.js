@@ -15,8 +15,6 @@ async function getFlownToCredited() {
     let response = await fetch('data/flown-to-credited/' + flown.value);
     let flownToCreditJSON = await response.json();
     
-    console.table(flownToCreditJSON)
-    
     options = '';
     for (let result of flownToCreditJSON['credit airlines']) {
         options += '<option value="' + result[0] + '">' + result[1] + '</option>';
@@ -61,7 +59,7 @@ async function getFlightTypes() {
     let flown = document.getElementById('flown-airline-select');
     let credit = document.getElementById('credit-airline-select');
 
-    if (flown.value) {
+    if (flown.value && credit.value) {
         let flightType = document.getElementById('flight-type-select');
         let response = await fetch('data/flight-types/' + flown.value + '/' + credit.value);
         let flightTypeJSON = await response.json();
