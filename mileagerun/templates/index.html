@@ -41,11 +41,31 @@
             <p><input type=submit value="Calculate Miles">
         </form>
     </div>
-<p>Distance: {{ distance }}</p>
+
 {% if earnings %}
-    <p>Redeemable Miles: {{ earnings['rdm'] }}</p>
-    <p>Elite Qualifying Miles: {{ earnings['eqm'] }}</p>
-    <p>Elite Qualifying Dollars: {{ earnings['eqd'] }}</p>
+    <table style="width: 500px; margin:auto">
+        <tr>
+        <th>Distance Flown</th>
+        <td name="distance_result">{{ distance }}</td>
+        </tr>
+        <tr>
+            <th>Elite Qualifying Miles (EQM)</th>
+            <td name="eqm_result">{{ earnings['eqm'] }}</td>
+        </tr>
+        <tr>
+            <th>Elite Qualifying Dollars (EQD)</th>
+            <td name="eqm_result">{{ earnings['eqd'] }}</td>
+        </tr>
+        <tr>
+            <th>Redeemable Miles (RDM)</th>
+            <td name="rdm_result">{{ earnings['rdm'] }}</td>
+        </tr>
+        <tr>
+            <th>Redeemable Miles Value</th>
+            <td name="rdm_value_result">Placeholder</td>
+        </tr>
+    </table> 
+
 {% endif %}
 
 
