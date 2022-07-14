@@ -85,7 +85,7 @@ def earnings():
 
 @app.route('/data/flown-to-credited/<flown>')
 def flown_to_credit(flown):
-    credit_airlines = []
+    credit_airlines = [('None', 'Select a credit airline')]
     for iata_code, full_name in  db.session.query(E.credit_airline, Airlines.full_name).\
             filter_by(flown_airline=flown).\
             join(Airlines, E.credit_airline==Airlines.iata_code).\
@@ -110,4 +110,8 @@ def airports():
 
 @app.route('/data/fare-codes/<flown>')
 def fare_codes(flown):
-    return jsonify({'codes': ['A','B','C']})
+    return jsonify({'codes': utils.get_fare_codes(airline=flown)})
+
+@app.route('/data/flight-types/<flown>/<credited>')
+def flight_types(flown, credited):
+    return jsonify({'flight types' : utils.get_flight_type(flown_airline=flown, credit_airline=credited)})

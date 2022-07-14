@@ -135,17 +135,17 @@ def get_airports():
     return airports
 
 def get_fare_codes(airline):
-    if not airline:
-        return (None, 'Select a Fare Code')
-    fare_codes = []
-    for code in db.session.query(E.fare_code).filter(E.flown_airline == airline):
-        fare_codes.append((code, code))
+    if airline == -1: # -1 is default value passed on page load before airlines are selected.
+        return [(None, 'Select airlines first.')]
+    fare_codes = [(None, 'Select a Fare Code')]
+    for code in db.session.query(E.fare_code).filter(E.flown_airline == airline).distinct():
+        fare_codes.append((code[0], code[0])) # Returning the letter twice to provide for descriptors in the future.
     return fare_codes
 
 def get_flight_type(flown_airline, credit_airline):
-    if not flown_airline and credit_airline:
-        return (None, '')
-    flight_types = []
-    for type in db.session.query(E.flight_type).filter(E.flown_airline == flown_airline, E.credit_airline == credit_airline):
-        flight_types.append((type, type))
+    if flown_airline == -1: # -1 is default value passed on page load before airlines are selected.
+        return [(None, 'Select airlines first.')]
+    flight_types = [(None, 'Select a flight type.')]
+    for result in db.session.query(E.flight_type).filter(E.flown_airline == flown_airline, E.credit_airline == credit_airline).distinct().order_by(E.flight_type):
+        flight_types.append((result[0], result[0]))
     return flight_types

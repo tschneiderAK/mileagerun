@@ -30,6 +30,6 @@ class SampleFlightForm(FlaskForm):
     credit_airline = SelectField(u'Airline Credited', choices=get_airlines())
     origin = SelectField('Origin Airport', choices=get_airports())
     destination = SelectField('Destination Airport', choices=get_airports())
-    fare = SelectField(u'Fare Code', choices=get_fare_codes(flown_airline))
-    type = SelectField(u'Trip Type', choices=get_flight_type(flown_airline, credit_airline))
+    fare = SelectField(u'Fare Code', choices=get_fare_codes(-1))
+    type = SelectField(u'Trip Type', choices=get_flight_type(-1,-1))
     submit = SubmitField('Submit')

@@ -1,6 +1,11 @@
 async function updateFlown() {
     getFlownToCredited();
     getFareCodes();
+    getFlightTypes();
+}
+
+async function updateCredit() {
+    getFlightTypes();
 }
 
 async function getFlownToCredited() {
@@ -14,7 +19,7 @@ async function getFlownToCredited() {
     
     options = '';
     for (let result of flownToCreditJSON['credit airlines']) {
-        options += '<option value="' + result + '">' + result + '</option>';
+        options += '<option value="' + result[0] + '">' + result[1] + '</option>';
 
     credit.innerHTML = options;
     }
@@ -26,8 +31,6 @@ async function getCreditedToFlown() {
     
     let response = await fetch('data/credited-to-flown/' + credit.value);
     let creditToFlownJSON = await response.json();
-    
-    console.table(creditToFlownJSON)
     
     options = '';
     for (let result of creditToFlownJSON['operating airlines']) {
@@ -45,13 +48,29 @@ async function getFareCodes() {
         let response = await fetch('data/fare-codes/' + flown.value);
         let fareCodesJSON = await response.json();
     
-        console.table(fareCodesJSON)
-        
         options = '';
         for (let result of fareCodesJSON['codes']) {
-            options += '<option value="' + result + '">' + result + '</option>';
+            options += '<option value="' + result[0] + '">' + result[0] + '</option>';
     
         fareCode.innerHTML = options;
+        }
+    }
+}
+
+async function getFlightTypes() {
+    let flown = document.getElementById('flown-airline-select');
+    let credit = document.getElementById('credit-airline-select');
+
+    if (flown.value) {
+        let flightType = document.getElementById('flight-type-select');
+        let response = await fetch('data/flight-types/' + flown.value + '/' + credit.value);
+        let flightTypeJSON = await response.json();
+        
+        options = '';
+        for (let result of flightTypeJSON['flight types']) {
+            options += '<option value="' + result[0] + '">' + result[1] + '</option>'; // Using result[0] and result[1] to allow for code descriptors in the future.
+    
+        flightType.innerHTML = options;
         }
     }
 }

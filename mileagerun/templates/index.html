@@ -1,16 +1,14 @@
 {% extends 'base.html' %}
 {% block title %}Home{% endblock %}
 {% block content %}
-    <div id="partnersJSON" onclick="getFlownToCredited()">
-        {{ partners }}
-    </div>
+
     <div>
         {% from "_formhelper.html" import render_field %}
         <form method=post action="#" style="width:100%; flex:0 0 auto" autocomplete="on" novalidate>
             {{ form.csrf_token }}
             <dl>
                 {{ render_field(form.origin, 
-                                class='input-large form-control',
+                                class='input-large form-select',
                                 id='origin-select',
                                 autocomplete='off', 
                                 error_raise=True) }}
@@ -26,13 +24,15 @@
                 {{ render_field(form.credit_airline, 
                                 class='input-large form-control js-select2', 
                                 id='credit-airline-select', 
-                                onclick='getCreditedToFlown()', 
+                                onclick='getCreditedToFlown()',
+                                onchange='updateCredit()', 
                                 error_raise=False) }}
                 {{ render_field(form.fare,
                                 id='fare-code-select',
                                 class='form-select js-select2', 
                                 style='width: 100%') }}
                 {{ render_field(form.type, 
+                                id='flight-type-select',
                                 class='form-select js-select2',
                                 style='width: 100%') }}
 
