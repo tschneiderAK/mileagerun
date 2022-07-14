@@ -23,7 +23,6 @@ def get_partners():
         partnerObj['credited'] = [r[0] for r in db.session.query(E.credit_airline).distinct().all()]
         partners.append(partnerObj)
 
-    print(partners)
     return jsonify({'partnerships' : partners})
 
 
