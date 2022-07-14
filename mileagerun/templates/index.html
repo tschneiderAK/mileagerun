@@ -2,7 +2,7 @@
 {% block title %}Home{% endblock %}
 {% block content %}
 
-    <div>
+    <div style="width: 500px; margin:auto">
         {% from "_formhelper.html" import render_field %}
         <form method=post action="#" style="width:100%; flex:0 0 auto" autocomplete="on" novalidate>
             {{ form.csrf_token }}
