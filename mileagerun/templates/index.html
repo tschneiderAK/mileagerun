@@ -3,10 +3,21 @@
 {% block content %}
 
     <div style="width: 500px; margin:auto">
+        <!-- <div style="margin:auto">
+        <img src="/static/images/320px-American_Airlines_logo.png">
+        <img src="/static/images/320px-Delta_logo.svg.png">
+        <img src="/static/images/320px-United_Airlines_Logo.svg.png">
+        </div> -->
         {% from "_formhelper.html" import render_field %}
         <form method=post action="#" style="width:100%; flex:0 0 auto" autocomplete="on" novalidate>
             {{ form.csrf_token }}
             <dl>
+                {{ render_field(form.credit_airline, 
+                    class='input-large form-control js-select2', 
+                    id='credit-airline-select', 
+                    onclick='getCreditedToFlown()',
+                    onchange='updateCredit()', 
+                    error_raise=False) }}
                 {{ render_field(form.origin, 
                                 class='input-large form-select',
                                 id='origin-select',
@@ -21,12 +32,7 @@
                                 class='input-large form-control js-select2', 
                                 id='flown-airline-select', 
                                 onchange='updateFlown()') }}
-                {{ render_field(form.credit_airline, 
-                                class='input-large form-control js-select2', 
-                                id='credit-airline-select', 
-                                onclick='getCreditedToFlown()',
-                                onchange='updateCredit()', 
-                                error_raise=False) }}
+
                 {{ render_field(form.fare,
                                 id='fare-code-select',
                                 class='form-select js-select2', 

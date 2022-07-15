@@ -97,12 +97,19 @@ def flown_to_credit(flown):
 
 @app.route('/data/credited-to-flown/<credited>')
 def credit_to_flown(credited):
-    flown_airlines = []
-    qry = db.session.query(E.credit_airline).filter_by(credit_airline=credited).distinct().order_by(E.credit_airline).all()
-    for result in qry:
-        flown_airlines.append(result[0])
-    print(flown_airlines)
-    return jsonify({'flown airlines' : flown_airlines})
+    partner_airlines = []
+    other_airlines =[]
+    for iata_code, full_name in  db.session.query(E.flown_airline, Airlines.full_name).\
+            filter_by(credit_airline=credited).\
+            join(Airlines, E.flown_airline==Airlines.iata_code).\
+            distinct().all():
+        partner_airlines.append((iata_code, full_name))
+    for iata_code, full_name in  db.session.query(E.flown_airline, Airlines.full_name).\
+            filter(E.credit_airline != credited).\
+            join(Airlines, E.flown_airline==Airlines.iata_code).\
+            distinct().all():
+        other_airlines.append((iata_code, full_name))
+    return jsonify({'partner airlines' : partner_airlines, 'other airlines' : other_airlines})
 
 @app.route('/data/airports.json')
 def airports():

@@ -1,14 +1,15 @@
 async function updateFlown() {
-    getFlownToCredited();
+    updateCreditOptions();
     getFareCodes();
     getFlightTypes();
 }
 
 async function updateCredit() {
     getFlightTypes();
+    updateFlownOptions();
 }
 
-async function getFlownToCredited() {
+async function updateCreditOptions() {
     let flown = document.getElementById('flown-airline-select');
     let credit = document.getElementById('credit-airline-select');
     
@@ -23,20 +24,31 @@ async function getFlownToCredited() {
     }
 }
 
-async function getCreditedToFlown() {
+async function updateFlownOptions() {
     let flown = document.getElementById('flown-airline-select');
     let credit = document.getElementById('credit-airline-select');
+    creditVal = credit.value;
+    creditLabel = credit.label;
+
+    if (flown.value) {
+        tmp = flown.value
+    }
     
-    let response = await fetch('data/credited-to-flown/' + credit.value);
+    let response = await fetch('data/credited-to-flown/' + creditVal);
     let creditToFlownJSON = await response.json();
     
-    options = '';
-    for (let result of creditToFlownJSON['operating airlines']) {
-        options += '<option value="' + result + '">' + result + '</option>';
-
-    flown.innerHTML = options;
+    options = "<optgroup label='" + creditVal + " Partner Airlines'>";
+    for (let result of creditToFlownJSON['partner airlines']) {
+        options += '<option value="' + result[0] + '">' + result[1] + '</option>';
     }
+    options += "<optgroup label='Other Airlines'>"
+    for (let result of creditToFlownJSON['other airlines']) {
+        options += '<option value="' + result[0] + '">' + result[1] + '</option>';
+    }
+    flown.innerHTML = options;
+    flown.value = tmp
 }
+
 
 async function getFareCodes() {
     let flown = document.getElementById('flown-airline-select');
