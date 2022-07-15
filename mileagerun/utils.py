@@ -138,7 +138,7 @@ def get_airports():
 def get_fare_codes(airline):
     if airline == -1: # -1 is default value passed on page load before airlines are selected.
         return [(None, 'Select airlines first.')]
-    fare_codes = [(None, 'Select a Fare Code')]
+    fare_codes = [("","")]
     for code in db.session.query(E.fare_code).filter(E.flown_airline == airline).distinct():
         fare_codes.append((code[0], code[0])) # Returning the letter twice to provide for descriptors in the future.
     return fare_codes
