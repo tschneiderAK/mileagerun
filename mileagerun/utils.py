@@ -122,7 +122,9 @@ def authenticate_password(email: str, password: str):
 
 def get_airlines():
     airlines = [(None, 'Select an Airline')]
-    for iata_code, full_name in db.session.query(Airlines.iata_code, Airlines.full_name):
+    for iata_code, full_name in  db.session.query(E.credit_airline, Airlines.full_name).\
+            join(Airlines, E.credit_airline==Airlines.iata_code).\
+            order_by(Airlines.full_name).distinct().all():
         airlines.append((iata_code, full_name))
     return airlines
 
