@@ -41,7 +41,7 @@ async function updateFlownOptions() {
     for (let result of creditToFlownJSON['partner airlines']) {
         options += '<option value="' + result[0] + '">' + result[1] + '</option>';
     }
-    options += "<optgroup label='Other Airlines'>"
+    options += "<optgroup label='Other Airlines (requires change in FF program)'>"
     for (let result of creditToFlownJSON['other airlines']) {
         options += '<option value="' + result[0] + '">' + result[1] + '</option>';
     }
