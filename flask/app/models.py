@@ -1,5 +1,5 @@
 from sqlalchemy import ForeignKey
-from mileagerun import db
+from app import db
 from flask_sqlalchemy import SQLAlchemy
 
 

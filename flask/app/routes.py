@@ -2,10 +2,10 @@ import json
 
 from flask import redirect, render_template, request, url_for, session, flash, jsonify
 
-from mileagerun import app, db, utils
-from mileagerun.forms import LoginForm, RegistrationForm, SampleFlightForm
-from mileagerun.models import EarningByMiles as E, User, Airlines
-from mileagerun.utils import authenticate_password, calc_distance, get_partners, miles_earned, new_user_registration 
+from app import app, db, utils
+from app.forms import LoginForm, RegistrationForm, SampleFlightForm
+from app.models import EarningByMiles as E, User, Airlines
+from app.utils import authenticate_password, calc_distance, get_partners, miles_earned, new_user_registration 
 
 
 

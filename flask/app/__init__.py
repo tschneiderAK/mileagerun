@@ -11,4 +11,4 @@ app.permanent_session_lifetime = timedelta(minutes=1440)
 
 db =SQLAlchemy(app)
 
-from mileagerun import routes
+from app import routes

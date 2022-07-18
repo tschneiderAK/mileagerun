@@ -4,8 +4,8 @@ from flask import flash, jsonify, redirect, url_for
 from haversine import haversine, Unit
 from passlib.hash import pbkdf2_sha256
 
-from mileagerun import db
-from mileagerun.models import Airlines, Airports, EarningByMiles as E, User
+from app import db
+from app.models import Airlines, Airports, EarningByMiles as E, User
 
 
 def get_partners():

@@ -4,7 +4,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, EmailField, PasswordField, BooleanField, SubmitField, SelectField, validators
 from wtforms.validators import DataRequired, Email, EqualTo, Length, Regexp
 
-from mileagerun.utils import get_airlines, get_airports, get_fare_codes, get_flight_type
+from app.utils import get_airlines, get_airports, get_fare_codes, get_flight_type
 
 class RegistrationForm(FlaskForm):
     first_name = StringField('First Name', validators=[Length(min=1, max=64)])
