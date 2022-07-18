@@ -28,20 +28,20 @@ class LoginForm(FlaskForm):
 class SampleFlightForm(FlaskForm):
     credit_airline = SelectField(u'Frequent Flyer Program',
                                  choices=get_airlines(),
-                                 validators=DataRequired())
+                                 validators=[DataRequired()])
     flown_airline = SelectField(u'Airline Flown', 
                                 choices=get_airlines(),
-                                validators=DataRequired())
+                                validators=[DataRequired()])
     origin = SelectField('Origin Airport',
                          choices=get_airports(),
-                         validators=DataRequired())
+                         validators=[DataRequired()])
     destination = SelectField('Destination Airport', 
                                 choices=get_airports(),
-                                validators=DataRequired)
+                                validators=[DataRequired()])
     fare = SelectField(u'Fare Code', 
                         choices=get_fare_codes(-1),
-                        validators=DataRequired())
+                        validators=[DataRequired()])
     type = SelectField(u'Trip Type', 
                         choices=get_flight_type(-1,-1),
-                        validators=DataRequired())
+                        validators=[DataRequired()])
     submit = SubmitField('Submit')

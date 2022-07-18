@@ -1,5 +1,4 @@
 async function updateFlown() {
-    updateCreditOptions();
     getFareCodes();
     getFlightTypes();
 }
