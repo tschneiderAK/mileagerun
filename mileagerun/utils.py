@@ -45,9 +45,15 @@ def miles_earned(distance_flown: float, credit_airline: str, flown_airline: str,
                                                 filter(E.flight_type==flight_type).\
                                                 filter(E.fare_code==fare_code.upper()).first()
 
-    rdm = round(distance_flown * multipliers.total_rdm_mult) # Redeemable miles (rdm) earned in the credit airline's frequent flyer currency
-    eqm = round(distance_flown * multipliers.eqm_mult)       # Elite qualifying miles as defined by the credit airline
-    eqd = round(distance_flown * multipliers.eqd_mult)       # Elite qualifying dollars, if applicable, for credit airline.
+    def calc_earnings(base, multiplier):
+        if base and multiplier:
+            return round(base*multiplier)
+        else:
+            return 0
+    
+    rdm = calc_earnings(distance_flown, multipliers.total_rdm_mult) # Redeemable miles (rdm) earned in the credit airline's frequent flyer currency
+    eqm = calc_earnings(distance_flown, multipliers.eqm_mult)       # Elite qualifying miles as defined by the credit airline
+    eqd = calc_earnings(distance_flown, multipliers.eqd_mult)       # Elite qualifying dollars, if applicable, for credit airline.
     earnings = {'rdm': rdm,
                 'eqm': eqm,
                 'eqd': eqd}
