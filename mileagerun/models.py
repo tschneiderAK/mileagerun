@@ -38,3 +38,11 @@ class Airlines(db.Model):
 
 class Airports(db.Model):
     __table__ = db.Table('airports', db.metadata, autoload=True, autoload_with=db.engine)
+
+class FareCodes(db.Model):
+    __tablename__ = 'fare_codes'
+    _id = db.Column('id', db.Integer, primary_key=True)
+    airline = db.Column(db.String(2), ForeignKey('airlines.iata_code'), nullable=False)
+    code = db.Column(db.String(2), nullable=False)
+
+
