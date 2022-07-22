@@ -5,7 +5,7 @@ async function updateFlown() {
 
 async function updateCredit() {
     getFlightTypes();
-    updateFlownOptions();
+    getFlownOptions();
 }
 
 async function updateCreditOptions() {
@@ -23,7 +23,7 @@ async function updateCreditOptions() {
     }
 }
 
-async function updateFlownOptions() {
+async function getFlownOptions() {
     let flown = document.getElementById('flown-airline-select');
     let credit = document.getElementById('credit-airline-select');
     creditVal = credit.value;
