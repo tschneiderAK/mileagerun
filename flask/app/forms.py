@@ -28,7 +28,8 @@ class LoginForm(FlaskForm):
 class SampleFlightForm(FlaskForm):
     credit_airline = SelectField(u'Frequent Flyer Program',
                                  choices=get_airlines(),
-                                 validators=[DataRequired()])
+                                 validators=[DataRequired()],
+                                )
     flown_airline = SelectField(u'Airline Flown', 
                                 choices=get_airlines(),
                                 validators=[DataRequired()])

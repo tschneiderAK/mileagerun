@@ -17,10 +17,13 @@
             <dl>
                 {{ render_field(form.credit_airline, 
                                 class='input-large form-control js-select2', 
-                                id='credit-airline-select', 
-                                onclick='getCreditedToFlown()',
+                                id='credit-airline-select',
                                 onchange='updateCredit()', 
                                 error_raise=False) }}
+                {{ render_field(form.flown_airline, 
+                                class='input-large form-control js-select2', 
+                                id='flown-airline-select', 
+                                onchange='updateFlown()') }}
                 {{ render_field(form.origin, 
                                 class='input-large form-select',
                                 id='origin-select',
@@ -31,10 +34,7 @@
                                 id='destination-select',
                                 autocomplete='off',
                                 error_raise='True') }}
-                {{ render_field(form.flown_airline, 
-                                class='input-large form-control js-select2', 
-                                id='flown-airline-select', 
-                                onchange='updateFlown()') }}
+
 
                 {{ render_field(form.fare,
                                 id='fare-code-select',
