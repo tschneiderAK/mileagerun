@@ -1,14 +1,36 @@
+// Calls various functions when the flown airline is changed.
 async function updateFlown() {
-    getFareCodes();
-    getFlightTypes();
+    setFareCodes();
+    setFlightTypes();
 }
 
+// Calls various functions when the credit airline is changed.
 async function updateCredit() {
-    getFlightTypes();
-    getFlownOptions();
+    setFlightTypes();
+    setFlownOptions();
 }
 
-async function updateCreditOptions() {
+// When we change the flown airline, check if it can partner with the credit airline.
+// Reset the credit airline if not.
+async function checkPartnership() {
+    let credit = document.getElementById('credit-airline-select');
+    let flown = document.getElementById('flown-airline-select');
+    console.log(credit.value)
+    console.log(flown.value)
+    if (credit.value) {
+        let response = await fetch('data/credited-to-flown/' + credit.value);
+        let creditToFlownJSON = await response.json();
+        if (!(flown.value in creditToFlownJSON['partner airlines'][0])) {
+            console.log('No partner match');
+            $(document).ready(function(){
+                $('#credit-airline-select').val(null).trigger('change')
+            })
+            console.log(document.getElementById('credit-airline-select').value);
+        }
+    }
+}
+
+async function setCreditOptions() {
     let flown = document.getElementById('flown-airline-select');
     let credit = document.getElementById('credit-airline-select');
     
@@ -23,7 +45,7 @@ async function updateCreditOptions() {
     }
 }
 
-async function getFlownOptions() {
+async function setFlownOptions() {
     let flown = document.getElementById('flown-airline-select');
     let credit = document.getElementById('credit-airline-select');
     creditVal = credit.value;
@@ -40,16 +62,12 @@ async function getFlownOptions() {
     for (let result of creditToFlownJSON['partner airlines']) {
         options += '<option value="' + result[0] + '">' + result[1] + '</option>';
     }
-    options += "<optgroup label='Other Airlines (requires change in FF program)'>"
-    for (let result of creditToFlownJSON['other airlines']) {
-        options += '<option value="' + result[0] + '">' + result[1] + '</option>';
-    }
     flown.innerHTML = options;
     flown.value = tmp
 }
 
 
-async function getFareCodes() {
+async function setFareCodes() {
     let flown = document.getElementById('flown-airline-select');
 
     if (flown.value) {
@@ -66,7 +84,7 @@ async function getFareCodes() {
     }
 }
 
-async function getFlightTypes() {
+async function setFlightTypes() {
     let flown = document.getElementById('flown-airline-select');
     let credit = document.getElementById('credit-airline-select');
 
@@ -83,6 +101,24 @@ async function getFlightTypes() {
         }
     }
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+    const form = document.getElementById('basicSearchForm');
+    form.addEventListener('submit', async function(event) {
+        event.preventDefault();
+        const formData = new FormData(form);
+        const data = await fetch('/calculate', {
+                method: 'POST',
+                body: formData,})
+            .then(response => response.json())
+        console.log(data)
+        document.getElementById('distance_result').innerHTML = data['distance'];
+        document.getElementById('eqm_result').innerHTML = data['eqm'];
+        document.getElementById('eqd_result').innerHTML = data['eqd'];
+        document.getElementById('rdm_result').innerHTML = data['rdm'];
+        document.getElementById('calculation-results').hidden = false;
+        })
+    })
 
 // Call bootstrap-autocomplete for the specified fields.
 

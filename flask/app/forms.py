@@ -39,10 +39,10 @@ class SampleFlightForm(FlaskForm):
     destination = SelectField('Destination Airport', 
                                 choices=get_airports(),
                                 validators=[DataRequired()])
-    fare = SelectField(u'Fare Code', 
+    fare_code = SelectField(u'Fare Code', 
                         choices=get_fare_codes(-1),
                         validators=[DataRequired()])
-    type = SelectField(u'Trip Type', 
+    flight_type = SelectField(u'Trip Type', 
                         choices=get_flight_type(-1,-1),
                         validators=[DataRequired()])
     submit = SubmitField('Submit')

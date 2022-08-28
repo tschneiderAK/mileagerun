@@ -47,6 +47,7 @@ def miles_earned(distance_flown: float, credit_airline: str, flown_airline: str,
 
     def calc_earnings(base, multiplier):
         if base and multiplier:
+            print(base, multiplier)
             return round(base*multiplier)
         else:
             return 0
@@ -54,7 +55,8 @@ def miles_earned(distance_flown: float, credit_airline: str, flown_airline: str,
     rdm = calc_earnings(distance_flown, multipliers.total_rdm_mult) # Redeemable miles (rdm) earned in the credit airline's frequent flyer currency
     eqm = calc_earnings(distance_flown, multipliers.eqm_mult)       # Elite qualifying miles as defined by the credit airline
     eqd = calc_earnings(distance_flown, multipliers.eqd_mult)       # Elite qualifying dollars, if applicable, for credit airline.
-    earnings = {'rdm': rdm,
+    earnings = {'distance': distance_flown,
+                'rdm': rdm,
                 'eqm': eqm,
                 'eqd': eqd}
     return earnings
@@ -79,7 +81,7 @@ def calc_distance(origin, destination):
     dest_coords = (dest_model.lat_decimal, dest_model.lon_decimal)
 
     if not (origin_coords and dest_coords):
-        return 'Coordinates not found'
+        return 0
 
     # Use haversine formula to get distance between coords.
     distance = round(haversine(origin_coords, dest_coords, unit=Unit.MILES))

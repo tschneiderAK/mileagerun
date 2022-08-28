@@ -3,16 +3,11 @@
 {% block content %}
 
     <div style="width: 500px; margin:auto">
-        <!-- <div style="margin:auto">
-        <img src="/static/images/320px-American_Airlines_logo.png">
-        <img src="/static/images/320px-Delta_logo.svg.png">
-        <img src="/static/images/320px-United_Airlines_Logo.svg.png">
-        </div> -->
         <p>
             Select a frequent flyer program you want to earn miles with and calculate how much you'll earn by flying partner airlines.
         </p>
         {% from "_formhelper.html" import render_field %}
-        <form method=post action="#" style="width:100%; flex:0 0 auto" autocomplete="on" novalidate>
+        <form id=basicSearchForm method=post style="width:100%; flex:0 0 auto" autocomplete="on" novalidate>
             {{ form.csrf_token }}
             <dl>
                 {{ render_field(form.credit_airline, 
@@ -34,52 +29,47 @@
                                 id='destination-select',
                                 autocomplete='off',
                                 error_raise='True') }}
-
-
-                {{ render_field(form.fare,
+                {{ render_field(form.fare_code,
                                 id='fare-code-select',
                                 class='form-select js-select2', 
                                 style='width: 100%') }}
-                {{ render_field(form.type, 
+                {{ render_field(form.flight_type, 
                                 id='flight-type-select',
                                 class='form-select js-select2',
                                 style='width: 100%') }}
 
 
             </dl>
-            <p><input type=submit value="Calculate Miles">
+            <button type=submit id="submit-calculate-miles">Calculate Miles</button>
         </form>
     </div>
 
-{% if earnings %}
-    <table style="width: 500px; margin:auto">
-        <tr>
-        <th>Distance Flown</th>
-        <td name="distance_result">{{ distance }}</td>
-        </tr>
-        <tr>
-            <th>Elite Qualifying Miles (EQM)</th>
-            <td name="eqm_result">{{ earnings['eqm'] }}</td>
-        </tr>
-        <tr>
-            <th>Elite Qualifying Dollars (EQD)</th>
-            <td name="eqm_result">{{ earnings['eqd'] }}</td>
-        </tr>
-        <tr>
-            <th>Redeemable Miles (RDM)</th>
-            <td name="rdm_result">{{ earnings['rdm'] }}</td>
-        </tr>
-        <tr>
-            <th>Redeemable Miles Value</th>
-            <td name="rdm_value_result">Placeholder</td>
-        </tr>
-    </table> 
-
-{% endif %}
-
-
-{% endblock%}
+    <div>
+        <table id='calculation-results' hidden style="width: 500px; margin:auto">
+            <tr>
+            <th>Distance Flown</th>
+            <td id="distance_result">---</td>
+            </tr>
+            <tr>
+                <th>Elite Qualifying Miles (EQM)</th>
+                <td id="eqm_result">---</td>
+            </tr>
+            <tr>
+                <th>Elite Qualifying Dollars (EQD)</th>
+                <td id="eqd_result">---</td>
+            </tr>
+            <tr>
+                <th>Redeemable Miles (RDM)</th>
+                <td id="rdm_result">---</td>
+            </tr>
+            <tr>
+                <th>Redeemable Miles Value</th>
+                <td id="rdm_value_result">---</td>
+            </tr>
+        </table> 
+    </div>
 
 
 
 
+{% endblock %}

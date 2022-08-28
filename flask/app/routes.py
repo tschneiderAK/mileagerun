@@ -13,16 +13,8 @@ from app.utils import authenticate_password, calc_distance, get_partners, miles_
 @app.route('/index')
 def home():
     form = SampleFlightForm()    
+
     
-    if request.method == 'POST' and form.submit(): 
-        print('form submit')
-        distance = calc_distance(origin=form.origin.data, destination=form.destination.data)
-        earnings = miles_earned(distance_flown=distance,
-                                credit_airline=form.credit_airline.data,
-                                flown_airline=form.flown_airline.data,
-                                flight_type=form.type.data,
-                                fare_code=form.fare.data)
-        return render_template('index.html', distance=distance, earnings=earnings, form=form, partners='Partners')
     return render_template('index.html', distance=0, earnings=None, form=form, partners='Partners')
 
 
@@ -123,3 +115,15 @@ def fare_codes(flown):
 @app.route('/data/flight-types/<flown>/<credited>')
 def flight_types(flown, credited):
     return jsonify({'flight types' : utils.get_flight_type(flown_airline=flown, credit_airline=credited)})
+
+@app.route('/calculate', methods=['POST'])
+def calculate_miles():
+    if request.method == 'POST':
+        args = request.form
+    distance = calc_distance(origin=args.get('origin'), destination=args.get('destination'))
+    earnings = miles_earned(distance_flown=distance,
+                            credit_airline=args.get('credit_airline'),
+                            flown_airline=args.get('flown_airline'),
+                            flight_type=args.get('flight_type'),
+                            fare_code=args.get('fare_code'))
+    return jsonify(earnings)
