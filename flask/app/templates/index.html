@@ -14,11 +14,12 @@
                                 class='input-large form-control js-select2', 
                                 id='credit-airline-select',
                                 onchange='updateCredit()', 
-                                error_raise=False) }}
+                                error_raise=True) }}
                 {{ render_field(form.flown_airline, 
                                 class='input-large form-control js-select2', 
                                 id='flown-airline-select', 
-                                onchange='updateFlown()') }}
+                                onchange='updateFlown()',
+                                error_raise=True) }}
                 {{ render_field(form.origin, 
                                 class='input-large form-select',
                                 id='origin-select',
