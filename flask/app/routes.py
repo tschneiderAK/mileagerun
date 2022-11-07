@@ -8,13 +8,10 @@ from app.models import EarningByMiles as E, User, Airlines
 from app.utils import authenticate_password, calc_distance, get_partners, miles_earned, new_user_registration 
 
 
-
 @app.route('/', methods=['POST', 'GET'])
 @app.route('/index')
 def home():
     form = SampleFlightForm()    
-
-    
     return render_template('index.html', distance=0, earnings=None, form=form, partners='Partners')
 
 

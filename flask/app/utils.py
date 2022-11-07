@@ -39,7 +39,7 @@ def miles_earned(distance_flown: float, credit_airline: str, flown_airline: str,
     :rtype: :type mapping: dict(str, int)
 
     """
-    # Query multiplier values mapper to the 'Earning' model.
+    # Query multiplier values mapped to the 'Earning' model. These values are multiplied by actual distance flown to get earnings.
     multipliers = db.session.query(E).filter(E.credit_airline==credit_airline.upper()).\
                                                 filter(E.flown_airline==flown_airline.upper()).\
                                                 filter(E.flight_type==flight_type).\
@@ -93,9 +93,11 @@ def new_user_registration(form):
     Registers a new user to the database.
 
     :param form form: Form data from RegistrationForm.
+    :return: Registration status.
 
     """
-
+    # TODO: Add a try/except clause to this to handle unsuccessful registration.
+    # TODO: Change return to flash message AND a status code.
     email = form.email.data
     if User.query.filter_by(email=email).first():
         flash(f"Email {email} is already in use. Please login.")
@@ -110,7 +112,7 @@ def new_user_registration(form):
 
 def authenticate_password(email: str, password: str):
     """
-    Athenticates the input password matches the password on file for the email provided.
+    Authenticates the input password matches the password on file for the email provided.
     
     :param str email: Email address for the account being logged in to.
     :param str password: Password to be authenticated.
@@ -129,7 +131,14 @@ def authenticate_password(email: str, password: str):
         return False
 
 def get_airlines():
-    airlines = [(None, 'Select an Airline')]
+    """
+    Returns a list of all airlines in database.
+
+    :return: List of airlines as tuples: (iata code, airline name)
+    :rtype: list[tuple[str,str]]
+    """
+
+    airlines = [("", 'Select an Airline')]
     for iata_code, full_name in  db.session.query(E.credit_airline, Airlines.full_name).\
             join(Airlines, E.credit_airline==Airlines.iata_code).\
             order_by(Airlines.full_name).distinct().all():
@@ -137,13 +146,27 @@ def get_airlines():
     return airlines
 
 def get_airports():
-    airports = [(None,"Select an Airport")]
+    """
+    Returns list of airports in database.
+
+    :return: List of airports as tuples: (airport iata code, airport display name)
+    :rtype: list[tuple[str, str]]
+
+    """
+    airports = [("","Select an Airport")]
     for iata_code, airport_name, city, country in db.session.query(Airports.iata_code, Airports.airport_name, Airports.city, Airports.country):
         display = f"{iata_code}: {airport_name} ({city}, {country})"
         airports.append((iata_code, display))
     return airports
 
 def get_fare_codes(airline):
+    """
+    Returns the fare codes for the given airline.
+
+    :param str airline: IATA code for the airline.
+    :return: List of str representing fare codes which airline uses.
+    :rtype: list[tuple[str,str]]
+    """
     if airline == -1: # -1 is default value passed on page load before airlines are selected.
         return [(None, 'Select airlines first.')]
     fare_codes = [("","")]
@@ -152,6 +175,14 @@ def get_fare_codes(airline):
     return fare_codes
 
 def get_flight_type(flown_airline, credit_airline):
+    """
+    Returns a list of flight types for the given pair of flown and credit airlines.
+
+    :param str flown_airline: The IATA code for the airline flown.
+    :param str credit_airline: The IATA code for the airline credited.
+    :return: List of flight types as tuple, for display and value.
+    :rtype: list[tuple[str,str]]
+    """
     if flown_airline == -1: # -1 is default value passed on page load before airlines are selected.
         return [(None, 'Select airlines first.')]
     flight_types = [(None, 'Select a flight type.')]
