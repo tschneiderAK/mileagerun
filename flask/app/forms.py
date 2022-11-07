@@ -26,6 +26,16 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Submit')
 
 class SampleFlightForm(FlaskForm):
+    """
+    Generic form for flight details.
+
+    :param str credit_airline: Airline to which the user is crediting miles, in the form of a 2-character IATA code.
+    :param str flown_airline: Airline which the usesr is flying, in the form of a 2-character IATA code.
+    :param str origin: Origin airport IATA code.
+    :param str destination: Destination airport IATA code.
+    :param str fare_code: Single-letter fare code for the operating airline.
+    :param str flight_type: Description of flight type, which varies with flown and credit airlines.
+    """
     credit_airline = SelectField(u'Frequent Flyer Program',
                                  choices=get_airlines(),
                                  validators=[DataRequired()],)
