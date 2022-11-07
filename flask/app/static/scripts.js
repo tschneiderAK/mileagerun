@@ -48,6 +48,7 @@ async function setCreditOptions() {
 async function setFlownOptions() {
     let flown = document.getElementById('flown-airline-select');
     let credit = document.getElementById('credit-airline-select');
+    let tmp = null
     creditVal = credit.value;
     creditLabel = credit.label;
 
@@ -63,7 +64,9 @@ async function setFlownOptions() {
         options += '<option value="' + result[0] + '">' + result[1] + '</option>';
     }
     flown.innerHTML = options;
-    flown.value = tmp
+    if (tmp) {
+        flown.value = tmp
+    }
 }
 
 
@@ -101,6 +104,8 @@ async function setFlightTypes() {
         }
     }
 }
+
+// Sends a POST request to /calculate/ to get miles earned.
 
 document.addEventListener("DOMContentLoaded", function() {
     const form = document.getElementById('basicSearchForm');

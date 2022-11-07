@@ -184,8 +184,8 @@ def get_flight_type(flown_airline, credit_airline):
     :rtype: list[tuple[str,str]]
     """
     if flown_airline == -1: # -1 is default value passed on page load before airlines are selected.
-        return [(None, 'Select airlines first.')]
-    flight_types = [(None, 'Select a flight type.')]
+        return [("", 'Select airlines first.')]
+    flight_types = [("", 'Select a flight type.')]
     for result in db.session.query(E.flight_type).filter(E.flown_airline == flown_airline, E.credit_airline == credit_airline).distinct().order_by(E.flight_type):
         flight_types.append((result[0], result[0]))
     return flight_types

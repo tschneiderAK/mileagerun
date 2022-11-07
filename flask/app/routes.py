@@ -1,6 +1,7 @@
 import json
 
-from flask import redirect, render_template, request, url_for, session, flash, jsonify
+from flask import redirect, render_template, request, Response, url_for, session, flash, jsonify
+
 
 from app import app, db, utils
 from app.forms import LoginForm, RegistrationForm, SampleFlightForm
@@ -43,7 +44,6 @@ def login():
         else:
             flash(f"Incorrect username or password.")
             return redirect(url_for('login')) 
-
     else:
         if 'user' in session:
             user = session['user']
@@ -100,10 +100,6 @@ def credit_to_flown(credited):
         other_airlines.append((iata_code, full_name))
     return jsonify({'partner airlines' : partner_airlines, 'other airlines' : other_airlines})
 
-@app.route('/data/airports.json')
-def airports():
-    #return jsonify(utils.get_airports())
-    return jsonify(["LAX", "Los Angeles"])
 
 @app.route('/data/fare-codes/<flown>')
 def fare_codes(flown):
@@ -115,8 +111,7 @@ def flight_types(flown, credited):
 
 @app.route('/calculate', methods=['POST'])
 def calculate_miles():
-    if request.method == 'POST':
-        args = request.form
+    args = request.form
     distance = calc_distance(origin=args.get('origin'), destination=args.get('destination'))
     earnings = miles_earned(distance_flown=distance,
                             credit_airline=args.get('credit_airline'),
