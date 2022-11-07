@@ -129,7 +129,7 @@ def authenticate_password(email: str, password: str):
         return False
 
 def get_airlines():
-    airlines = [(None, 'Select an Airline')]
+    airlines = [("", 'Select an Airline')]
     for iata_code, full_name in  db.session.query(E.credit_airline, Airlines.full_name).\
             join(Airlines, E.credit_airline==Airlines.iata_code).\
             order_by(Airlines.full_name).distinct().all():
@@ -137,7 +137,7 @@ def get_airlines():
     return airlines
 
 def get_airports():
-    airports = [(None,"Select an Airport")]
+    airports = [("","Select an Airport")]
     for iata_code, airport_name, city, country in db.session.query(Airports.iata_code, Airports.airport_name, Airports.city, Airports.country):
         display = f"{iata_code}: {airport_name} ({city}, {country})"
         airports.append((iata_code, display))
@@ -153,8 +153,8 @@ def get_fare_codes(airline):
 
 def get_flight_type(flown_airline, credit_airline):
     if flown_airline == -1: # -1 is default value passed on page load before airlines are selected.
-        return [(None, 'Select airlines first.')]
-    flight_types = [(None, 'Select a flight type.')]
+        return [("", 'Select airlines first.')]
+    flight_types = [("", 'Select a flight type.')]
     for result in db.session.query(E.flight_type).filter(E.flown_airline == flown_airline, E.credit_airline == credit_airline).distinct().order_by(E.flight_type):
         flight_types.append((result[0], result[0]))
     return flight_types
