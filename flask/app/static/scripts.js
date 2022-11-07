@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", function() {
         })
     })
 
-// Call bootstrap-autocomplete for the specified fields.
+// Call select2 for the specified fields.
 
   $(document).ready(function(){
     $('.js-select2').select2();
