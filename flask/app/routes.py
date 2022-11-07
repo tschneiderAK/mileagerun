@@ -111,17 +111,11 @@ def flight_types(flown, credited):
 
 @app.route('/calculate', methods=['POST'])
 def calculate_miles():
-    form = SampleFlightForm()
-    if request.method == 'POST':
-        if not form.validate():
-            errs = form.errors
-            return Response(jsonify(errs), status=417)
-        else:
-            args = request.form
-            distance = calc_distance(origin=args.get('origin'), destination=args.get('destination'))
-            earnings = miles_earned(distance_flown=distance,
-                                    credit_airline=args.get('credit_airline'),
-                                    flown_airline=args.get('flown_airline'),
-                                    flight_type=args.get('flight_type'),
-                                    fare_code=args.get('fare_code'))
-            return jsonify(earnings)
+    args = request.form
+    distance = calc_distance(origin=args.get('origin'), destination=args.get('destination'))
+    earnings = miles_earned(distance_flown=distance,
+                            credit_airline=args.get('credit_airline'),
+                            flown_airline=args.get('flown_airline'),
+                            flight_type=args.get('flight_type'),
+                            fare_code=args.get('fare_code'))
+    return jsonify(earnings)
