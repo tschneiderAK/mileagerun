@@ -1,7 +1,19 @@
-import os, subprocess
+from datetime import timedelta
+import os
+
+import yaml
+
+from apispec import APISpec
+from apispec_webframeworks.flask import FlaskPlugin
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from datetime import timedelta
+
+spec = APISpec(
+    title="MileageRun",
+    version="1.0.0",
+    openapi_version="3.0.2",
+    plugins=[FlaskPlugin()],
+)
 
 app = Flask(__name__)
 app.secret_key = os.environ['FLASK_SECRET_KEY']

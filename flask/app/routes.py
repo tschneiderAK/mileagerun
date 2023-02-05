@@ -1,7 +1,4 @@
-import json
-
 from flask import redirect, render_template, request, Response, url_for, session, flash, jsonify
-
 
 from app import app, db, utils
 from app.forms import LoginForm, RegistrationForm, SampleFlightForm
@@ -9,11 +6,25 @@ from app.models import EarningByMiles as E, User, Airlines
 from app.utils import authenticate_password, calc_distance, get_partners, miles_earned, new_user_registration 
 
 
-@app.route('/', methods=['POST', 'GET'])
+@app.route('/', methods=['GET', 'POST'])
 @app.route('/index')
 def home():
+    """Index endpoint
+
+    Returns html for the home or index page.
+
+    get:
+        description: Displays the index page.
+        responses:
+            200:
+                content:
+                    text/html:
+                        schema:
+                            type: string
+    
+    """
     form = SampleFlightForm()    
-    return render_template('index.html', distance=0, earnings=None, form=form, partners='Partners')
+    return render_template('index.html', distance=0, earnings=None, form=form, partners='Partners'), 200
 
 
 @app.route('/view')

@@ -1,5 +1,3 @@
-from email.charset import Charset
-
 from flask_wtf import FlaskForm
 from wtforms import StringField, EmailField, PasswordField, BooleanField, SubmitField, SelectField, validators
 from wtforms.validators import DataRequired, Email, EqualTo, Length, Regexp
@@ -7,6 +5,15 @@ from wtforms.validators import DataRequired, Email, EqualTo, Length, Regexp
 from app.utils import get_airlines, get_airports, get_fare_codes, get_flight_type
 
 class RegistrationForm(FlaskForm):
+    """
+    User registration form.
+
+    :param str optional first_name: User's first name.
+    :param str optional last_name: User's last name.
+    :param str email: User's email. Will be used as userid.
+    :param str password: Plaintext user password.
+    :param str confirm: Plaintext confirmation of user password.
+    """
     first_name = StringField('First Name', validators=[Length(min=1, max=64)])
     last_name = StringField('Last Name', validators=[Length(min=1, max=64)])
     email = EmailField('Email*', validators=[DataRequired(),
@@ -20,6 +27,13 @@ class RegistrationForm(FlaskForm):
     submit = SubmitField('Submit')
 
 class LoginForm(FlaskForm):
+    """
+    Form for user login.
+
+    :param str email: User email address. Functions as userid.
+    :param str password: Plaintext user password. Password will be hashed for authentication.
+    :param bool remember: Option to remember userid.
+    """
     email = EmailField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     remember = BooleanField('Remember Me')
@@ -27,7 +41,7 @@ class LoginForm(FlaskForm):
 
 class SampleFlightForm(FlaskForm):
     """
-    Generic form for flight details.
+    Form for flight details.
 
     :param str credit_airline: Airline to which the user is crediting miles, in the form of a 2-character IATA code.
     :param str flown_airline: Airline which the usesr is flying, in the form of a 2-character IATA code.
