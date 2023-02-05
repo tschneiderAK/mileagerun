@@ -4,9 +4,9 @@ Calculates frequent flyer miles earned based on the earning airline and the mark
 ## Installation and Configuration
 ### Extensions
 
--- SQL ORM: [Flask-SQLalchemy](http://flask-sqlalchemy.pocoo.org/2.5/)
+- SQL ORM:  [Flask-SQLalchemy](http://flask-sqlalchemy.pocoo.org/2.5/)
 
--- Forms: Flask-WTForms
+- Forms:    Flask-WTForms
 
 ### Installation
 
